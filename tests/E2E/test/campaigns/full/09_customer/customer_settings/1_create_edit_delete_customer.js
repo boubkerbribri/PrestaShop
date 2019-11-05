@@ -116,6 +116,7 @@ scenario('Create, Edit, delete "Customer"', () => {
     test('should set the "Last Name" input', () => client.waitAndSetValue(accountPage.lastname_input, editCustomerData.last_name));
     test('should set the "Email" input', () => client.waitAndSetValue(accountPage.email_input, date_time + editCustomerData.email_address));
     test('should set the "Password" input', () => client.waitAndSetValue(accountPage.password_input, editCustomerData.password));
+    test('should accept terms and conditions', () => client.waitForExistAndClick(accountPage.rgpd_input));
     test('should set the "Birthday" input', () => client.waitAndSetValue(accountPage.birthday_input, editCustomerData.birthday.month + '/' + editCustomerData.birthday.day + '/' + editCustomerData.birthday.year));
     test('should click on "Save" button', () => client.waitForExistAndClick(accountPage.save_account_button));
   }, 'customer');
