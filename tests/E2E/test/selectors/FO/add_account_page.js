@@ -5,6 +5,7 @@ module.exports = {
     lastname_input: '//*[@id="customer-form"]//input[@name="lastname"]',
     email_input: '//*[@id="customer-form"]//input[@name="email"]',
     password_input: '[name="password"]',
+    rgpd_input: 'input[name="psgdpr"]',
     birthday_input: '[name="birthday"]',
     checkout_step: '//*[@id="checkout-personal-information-step"]/h1',
     checkout_step_complete: '#checkout-personal-information-step.-complete',
