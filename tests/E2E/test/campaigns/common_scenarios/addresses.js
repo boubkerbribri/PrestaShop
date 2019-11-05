@@ -29,7 +29,7 @@ module.exports = {
       test('should go to the "Addresses" page', () => client.goToSubtabMenuPage(Menu.Sell.Customers.customers_menu, Menu.Sell.Customers.addresses_submenu));
       test('should click on add new address', () => client.waitForExistAndClick(Addresses.new_address_button));
       test('should set "Email" input', () => client.waitAndSetValue(Addresses.email_input, date_time + addressData.email));
-      test('should set "Identification number" input', () => client.waitAndSetValue(Addresses.id_number_input, addressData.id_number));
+      //test('should set "Identification number" input', () => client.waitAndSetValue(Addresses.id_number_input, addressData.id_number));
       test('should set "Address alias" input', () => client.waitAndSetValue(Addresses.address_alias_input, addressData.address_alias));
       test('should check that the "First name" is "John"', () => client.checkAttributeValue(Addresses.first_name_input, 'value', addressData.first_name));
       test('should check that the "Last name" is "Doe"', () => client.checkAttributeValue(Addresses.last_name_input, 'value', addressData.last_name));
@@ -57,7 +57,7 @@ module.exports = {
         test('should verify the appearance of the red error message', () => client.checkTextValue(BO.alert_panel, '12 errors', 'contain'));
       } else {
         test('should set "Email" input', () => client.waitAndSetValue(Addresses.email_input, "wrongEmail@gmail.com"));
-        test('should set "Identification number" input', () => client.waitAndSetValue(Addresses.id_number_input, addressData.id_number));
+        //test('should set "Identification number" input', () => client.waitAndSetValue(Addresses.id_number_input, addressData.id_number));
         test('should set "Address alias" input', () => client.waitAndSetValue(Addresses.address_alias_input, addressData.address_alias));
         test('should set "First name" input', () => client.waitAndSetValue(Addresses.first_name_input, addressData.first_name));
         test('should set "Last name" input', () => client.waitAndSetValue(Addresses.last_name_input, addressData.last_name));
@@ -120,7 +120,7 @@ module.exports = {
           .then(() => client.search(Addresses.filter_by_address_input, dataAddress + " " + date_time));
       });
       test('should click on "Edit" button', () => client.waitForExistAndClick(Addresses.edit_button));
-      test('should set the new "Identification number" input', () => client.waitAndSetValue(Addresses.id_number_input, newAddressData.id_number));
+      //test('should set the new "Identification number" input', () => client.waitAndSetValue(Addresses.id_number_input, newAddressData.id_number));
       test('should set the new "Address alias" input', () => client.waitAndSetValue(Addresses.address_alias_input, newAddressData.address_alias));
       test('should check that the "First name" is "John"', () => client.checkAttributeValue(Addresses.first_name_input, 'value', newAddressData.first_name));
       test('should check that the "Last name" is "Doe"', () => client.checkAttributeValue(Addresses.last_name_input, 'value', newAddressData.last_name));
