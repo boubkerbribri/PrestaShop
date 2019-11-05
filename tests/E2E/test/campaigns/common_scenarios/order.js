@@ -55,6 +55,7 @@ module.exports = {
           } else {
             test('should set the "Email" input', () => client.waitAndSetValue(accountPage.new_email_input, data.customer.email.replace("%ID", '_guest' + date_time)));
           }
+          test('should accept terms and conditions', () => client.waitForExistAndClick(accountPage.rgpd_input));
           test('should click on "CONTINUE" button', () => client.waitForExistAndClick(accountPage.new_customer_btn));
         }, 'common_client');
 

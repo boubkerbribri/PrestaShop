@@ -1,6 +1,6 @@
 module.exports = {
   productPage: {
-    first_product: '(//*[@id="content"]//h3[@itemprop="name"])[1]',
+    first_product: '(//*[@id="content"]//article//h3/a)[1]',
     first_product_size: '//*[@id="group_1"]',
     first_product_quantity: '//*[@id="quantity_wanted"]',
     first_product_color: '//*[@id="group_2"]/li[2]/label/input',
@@ -25,7 +25,7 @@ module.exports = {
     products_number: '//*[@id="js-product-list-top"]//p',
     offline_warning_message: '//div[contains(@class, "alert-warning")]//p',
     product_discounts_table: '//*[@id="add-to-cart-or-refresh"]//tbody/tr[%R]/td[%D]',
-    second_product: '(//*[@id="content"]//h3[@itemprop="name"])[2]',
+    second_product: '(//*[@id="content"]//article//h3/a)[2]',
     product_availability_message: '//*[@id="product-availability"]',
     product_summary: '(//*[@itemprop="description"]//p)[1]',
     product_description: '//*[@id="description"]',
