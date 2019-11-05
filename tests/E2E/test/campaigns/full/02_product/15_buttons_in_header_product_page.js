@@ -68,7 +68,7 @@ scenario('Check that the buttons in header product page works successfully', () 
     test('should go to the Front Office', () => {
       return promise
         .then(() => client.waitForExistAndClick(AddProductPage.close_validation_button))
-        .then(() => client.waitForExistAndClick(AccessPageBO.shopname))
+        .then(() => client.waitForExistAndClick(AccessPageBO.shopname,5000))
         .then(() => client.switchWindow(1));
     });
     test('should switch the front office language to French', () => client.changeLanguage('fr'));
