@@ -167,6 +167,7 @@ scenario('Create order by a guest from the Front Office', client => {
     test('should set the "First name" input', () => client.waitAndSetValue(accountPage.firstname_input, data.customer.firstname, 1000));
     test('should set the "Last name" input', () => client.waitAndSetValue(accountPage.lastname_input, data.customer.lastname));
     test('should set the "Email" input', () => client.waitAndSetValue(accountPage.new_email_input, data.customer.email.replace("%ID", 'account' + date_time)));
+    test('should agree to terms and conditions', () => client.waitForExistAndClick(accountPage.gdpr_checkbox_input));
     test('should click on "CONTINUE" button', () => client.waitForExistAndClick(accountPage.new_customer_btn));
   }, 'common_client');
   scenario('Go back to the Back Office and check the created customer', () => {

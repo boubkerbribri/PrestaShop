@@ -35,6 +35,7 @@ module.exports = {
     new_customer_btn: '[data-link-action="register-new-customer"]',
     new_address_btn: '[name="confirm-addresses"]',
     new_email_input: '//*[@id="customer-form"]//input[@name="email"]',
+    gdpr_checkbox_input: '//*[@id="customer-form"]//input[@name="psgdpr"]',
     password_account_input: '//*[@id="customer-form"]//input[@name="password"]',
     new_password_input: '//*[@id="customer-form"]//input[@name="new_password"]',
     customer_form: '//*[@id="customer-form"]',
