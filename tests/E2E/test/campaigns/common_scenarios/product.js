@@ -776,7 +776,7 @@ module.exports = {
       await client.waitForExistAndClick(AddProductPage.delete_button);
       await client.waitForVisible(AddProductPage.delete_confirmation_button.replace('%BUTTON', 'No'))
     });
-    test('should click on "No" of the confirmation modal', () => client.waitForVisibleAndClick(AddProductPage.delete_confirmation_button.replace('%BUTTON', 'No')));
+    test('should click on "No" of the confirmation modal', () => client.waitForVisibleAndClick(AddProductPage.delete_confirmation_button.replace('%BUTTON', 'No'), 1000));
     test('should go to "Catalog > products" page', () => {
       return promise
         .then(() => client.pause(2000))
@@ -1287,6 +1287,7 @@ module.exports = {
       test('should set the "First name" input', () => client.waitAndSetValue(accountPage.firstname_input, customerData.firstname));
       test('should set the "Last name" input', () => client.waitAndSetValue(accountPage.lastname_input, customerData.lastname));
       test('should set the "Email" input', () => client.waitAndSetValue(accountPage.email_input, date_time + customerData.email));
+      test('should accept terms and conditions', () => client.waitForExistAndClick(accountPage.rgpd_input));
       test('should set the "Password" input', () => client.waitAndSetValue(accountPage.password_input, customerData.password));
       test('should click on "Save" button', () => client.waitForExistAndClick(accountPage.save_account_button));
       test('should click on "User name" link', () => client.waitForExistAndClick(accountPage.account_link));

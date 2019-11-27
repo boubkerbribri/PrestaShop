@@ -190,6 +190,7 @@ scenario('Create virtual Product in the Back Office', () => {
             test('should set the "Last name" input', () => client.waitAndSetValue(accountPage.lastname_input, 'test'));
             test('should set the "Email" input', () => client.waitAndSetValue(accountPage.new_email_input, global.date_time + 'pub@prestashop.com'));
             test('should set the "Password" input', () => client.waitAndSetValue(accountPage.password_account_input, '123456789'));
+            test('should accept terms and conditions', () => client.waitForExistAndClick(accountPage.gdpr_checkbox_input));
             test('should click on "CONTINUE" button', () => client.waitForExistAndClick(accountPage.new_customer_btn));
           }, 'common_client');
           scenario('Add new address', client => {
