@@ -42,8 +42,11 @@ describe('Create, Read, Update and Delete Category', async () => {
     page = await helper.newTab(browser);
     this.pageObjects = await init();
     createCategoryData = await (new CategoryFaker());
+    await console.log(createCategoryData);
     createSubCategoryData = await (new CategoryFaker({name: `subCategory${createCategoryData.name}`}));
+    await console.log(createSubCategoryData);
     editCategoryData = await (new CategoryFaker({displayed: false, name: `update${createCategoryData.name}`}));
+    await console.log(editCategoryData);
   });
   after(async () => {
     await helper.closeBrowser(browser);
@@ -179,6 +182,7 @@ describe('Create, Read, Update and Delete Category', async () => {
         'name',
         createCategoryData.name,
       );
+      await this.pageObjects.categoriesPage.page.screenshot({path: '/tests/mochawesome-report/test1.png', fullPage: true});
       const textColumn = await this.pageObjects.categoriesPage.getTextColumnFromTableCategories(1, 'name');
       await expect(textColumn).to.contains(createCategoryData.name);
     });
@@ -216,6 +220,7 @@ describe('Create, Read, Update and Delete Category', async () => {
         'name',
         createCategoryData.name,
       );
+      await this.pageObjects.categoriesPage.page.screenshot({path: '/tests/mochawesome-report/test2.png', fullPage: true});
       const textColumn = await this.pageObjects.categoriesPage.getTextColumnFromTableCategories(1, 'name');
       await expect(textColumn).to.contains(createCategoryData.name);
     });
@@ -274,6 +279,7 @@ describe('Create, Read, Update and Delete Category', async () => {
         'name',
         editCategoryData.name,
       );
+      await this.pageObjects.categoriesPage.page.screenshot({path: '/tests/mochawesome-report/test3.png', fullPage: true});
       const textColumn = await this.pageObjects.categoriesPage.getTextColumnFromTableCategories(1, 'name');
       await expect(textColumn).to.contains(editCategoryData.name);
     });
