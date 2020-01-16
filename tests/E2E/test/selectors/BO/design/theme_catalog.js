@@ -8,6 +8,6 @@ module.exports = {
 
     //Selectors in addons.prestashop.com site
     search_name: '//*[@id="search_name"]/b',
-    theme_header_name: '//*[@id="product_content"]//h1'
+    theme_header_name: '//*[@id="product_page"]//div[@class="product-title"]//h1'
   }
 };
