@@ -4,6 +4,8 @@ const {ModulePage} = require('../../selectors/BO/module_page');
 const {AddProductPage} = require('../../selectors/BO/add_product_page');
 const {AccessPageFO} = require('../../selectors/FO/access_page');
 const {ShopParameters} = require('../../selectors/BO/shopParameters/shop_parameters');
+const {Menu} = require('../../selectors/BO/menu.js');
+
 
 const commonScenarios = require('../common_scenarios/product');
 const commonInstallation = require('../common_scenarios/common_installation');
@@ -47,6 +49,14 @@ scenario('The shop installation', () => {
 
   welcomeScenarios.findAndCloseWelcomeModal('installation');
 
+  scenario('Disable shop in the Back Office', client => {
+    test('should go to the "Shop parameters" page', () => client.goToSubtabMenuPage(Menu.Configure.ShopParameters.shop_parameters_menu, Menu.Configure.ShopParameters.general_submenu));
+    test('should go to "Maintenance" page', () => client.waitForExistAndClick(Menu.Configure.ShopParameters.maintenance_tab));
+    test('should set the "Enable shop" parameter to "Yes"', () => client.waitForExistAndClick(ShopParameters.enable_shop.replace("%ID", '0')));
+    test('should click on "Save" button', () => client.waitForExistAndClick(ShopParameters.save_button));
+    test('should verify the appearance of the green validation', () => client.checkTextValue(ShopParameters.success_box, "Successful update."));
+  }, 'common_client');
+
   scenario('Install "Top-sellers block" and "New products block" modules From Cross selling', client => {
     moduleCommonScenarios.installModule(client, ModulePage, AddProductPage, "ps_bestsellers");
     moduleCommonScenarios.installModule(client, ModulePage, AddProductPage, "ps_newproducts");
@@ -55,11 +65,7 @@ scenario('The shop installation', () => {
   scenario('Install " 1-Click Upgrade " From Cross selling and configure it', client => {
     moduleCommonScenarios.installModule(client, ModulePage, AddProductPage, "autoupgrade");
     test('should click on "configure" button', () => client.waitForExistAndClick(ModulePage.configure_module_theme_button.split('%moduleTechName').join("autoupgrade")));
-    test('should deactivate the shop', () => {
-      return promise
-        .then(() => client.waitForVisibleElement(ModulePage.confirm_maintenance_shop_icon))
-        .then(() => client.waitForExistAndClick(ModulePage.maintenance_shop));
-    });
+
     if (rcLink !== "") {
       test('should copy the downloaded RC to the auto upgrade directory', () => client.copyFileToAutoUpgrade(downloadsFolderPath, filename, rcTarget + "admin-dev/autoupgrade/download"));
     }
@@ -87,7 +93,8 @@ scenario('The shop installation', () => {
   }, 'installation');
 
   scenario('Enable shop in the Back Office', client => {
-    test('should go to "Shop parameters" page', () => client.waitForExistAndClick(ShopParameters.maintenance_mode_link));
+    test('should go to the "Shop parameters" page', () => client.goToSubtabMenuPage(Menu.Configure.ShopParameters.shop_parameters_menu, Menu.Configure.ShopParameters.general_submenu));
+    test('should go to "Maintenance" page', () => client.waitForExistAndClick(Menu.Configure.ShopParameters.maintenance_tab));
     test('should set the "Enable shop" parameter to "Yes"', () => client.waitForExistAndClick(ShopParameters.enable_shop.replace("%ID", '1')));
     test('should click on "Save" button', () => client.waitForExistAndClick(ShopParameters.save_button));
     test('should verify the appearance of the green validation', () => client.checkTextValue(ShopParameters.success_box, "Successful update."));

@@ -1,4 +1,4 @@
-const {Installation} = require('../../selectors/BO/installation');
+/*const {Installation} = require('../../selectors/BO/installation');
 const {AccessPageFO} = require('../../selectors/FO/access_page');
 const commonInstallation = require('../common_scenarios/common_installation');
 require('../../globals.webdriverio.js');
@@ -15,3 +15,4 @@ scenario('The shop installation', () => {
     test('should sign in FO', () => client.signInFO(AccessPageFO));
   }, 'installation');
 }, 'installation', true);
+*/

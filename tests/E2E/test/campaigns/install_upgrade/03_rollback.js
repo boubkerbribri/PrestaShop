@@ -24,16 +24,19 @@ scenario('The shop installation', () => {
     test('should login successfully in the Back Office', () => client.signInBO(AccessPageBO, UrlLastStableVersion));
   }, 'installation');
 
+  scenario('disable shop in the Back Office', client => {
+    test('should go to the "Shop parameters" page', () => client.goToSubtabMenuPage(Menu.Configure.ShopParameters.shop_parameters_menu, Menu.Configure.ShopParameters.general_submenu));
+    test('should go to "Maintenance" page', () => client.waitForExistAndClick(Menu.Configure.ShopParameters.maintenance_tab));
+    test('should set the "Enable shop" parameter to "Yes"', () => client.waitForExistAndClick(ShopParameters.enable_shop.replace("%ID", '0')));
+    test('should click on "Save" button', () => client.waitForExistAndClick(ShopParameters.save_button));
+    test('should verify the appearance of the green validation', () => client.checkTextValue(ShopParameters.success_box, "Successful update."));
+  }, 'common_client');
+
   scenario('Rollback to the old version ', client => {
     test('should go to "Module manager" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_manager_submenu));
     test('should set the name of the module in the search input', () => client.waitAndSetValue(ModulePage.module_selection_input, 'autoupgrade'));
     test('should click on "Search" button', () => client.waitForExistAndClick(ModulePage.selection_search_button));
     test('should click on "Configure" button', () => client.waitForExistAndClick(ModulePage.configure_link.replace('%moduleTechName', 'autoupgrade')));
-    test('should deactivate the shop', () => {
-      return promise
-        .then(() => client.waitForVisibleElement(ModulePage.confirm_maintenance_shop_icon))
-        .then(() => client.waitForExistAndClick(ModulePage.maintenance_shop));
-    });
     test('should choose the back up version', () => client.waitForExistAndClick(ModulePage.rollback_version));
     test('should click on the "ROLLBACK" button', () => client.waitForExistAndClick(ModulePage.rollback_button));
     test('should wait until the rollback is finished', () => client.waitForExist(ModulePage.loader_tag, 310000));
@@ -49,7 +52,8 @@ scenario('The shop installation', () => {
   }, 'installation');
 
   scenario('Enable shop in the Back Office', client => {
-    test('should go to "Shop parameters" page', () => client.waitForExistAndClick(ShopParameters.maintenance_mode_link));
+    test('should go to the "Shop parameters" page', () => client.goToSubtabMenuPage(Menu.Configure.ShopParameters.shop_parameters_menu, Menu.Configure.ShopParameters.general_submenu));
+    test('should go to "Maintenance" page', () => client.waitForExistAndClick(Menu.Configure.ShopParameters.maintenance_tab));
     test('should set the "Enable shop" parameter to "Yes"', () => client.waitForExistAndClick(ShopParameters.enable_shop.replace("%ID", '1')));
     test('should click on "Save" button', () => client.waitForExistAndClick(ShopParameters.save_button));
     test('should verify the appearance of the green validation', () => client.checkTextValue(ShopParameters.success_box, "Successful update."));
