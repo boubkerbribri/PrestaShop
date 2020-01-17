@@ -88,7 +88,7 @@ module.exports = {
     },
 
     //Module name in "addons.prestashop.com" after clicking on "Dicover" button
-    module_name: '//*[@id="product_content"]/div[@class="product_head"]//h1',
+    module_name: '//*[@id="product_page"]//div[@class="product-title"]//h1',
     ContactFormPage: {
       send_confirmation_email_button: '//*[@id="fieldset_0"]//label[@for="CONTACTFORM_SEND_CONFIRMATION_EMAIL_%S"]',
       receive_customers_messages_label: '//*[@id="fieldset_0"]//label[@for="CONTACTFORM_SEND_NOTIFICATION_EMAIL_%S"]',
