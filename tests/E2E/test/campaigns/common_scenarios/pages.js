@@ -113,7 +113,7 @@ module.exports = {
       });
       test('should click on "Edit" button', () => {
         return promise
-          .then(() => client.waitForExistAndClick(Pages.Category.dropdown_toggle))
+          .then(() => client.waitForExistAndClick(Pages.Category.dropdown_toggle, 3000))
           .then(() => client.scrollWaitForVisibleAndClick(Pages.Category.edit_button));
       });
       if (categoryData.hasOwnProperty('sub_category')) {

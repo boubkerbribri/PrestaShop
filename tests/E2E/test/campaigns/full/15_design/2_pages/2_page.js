@@ -108,7 +108,7 @@ scenario('Create, edit, delete "CMS page"', () => {
         .then(() => client.isVisible(Pages.Page.title_filter_input))
         .then(() => client.search(Pages.Page.title_filter_input, pageWithCategory.meta_title + date_time));
     });
-    test('should click on "Edit" button', () => client.scrollWaitForExistAndClick(Pages.Page.edit_button));
+    test('should click on "Edit" button', () => client.scrollWaitForExistAndClick(Pages.Page.edit_button, 2000));
     common_scenarios.editPage(pageWithCategory, newPageData, categoryDataWithoutSubCategory.name + date_time, 4);
   }, 'design');
 

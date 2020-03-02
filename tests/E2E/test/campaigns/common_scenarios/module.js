@@ -348,7 +348,7 @@ module.exports = {
       return promise
         .then(() => client.waitForVisible(ModulePage.notification_number))
         .then(() => client.getTextInVar(ModulePage.notification_number, 'notification'))
-        .then(() => client.waitForExistAndClick(Menu.Improve.Modules.alerts_subTab))
+       // .then(() => client.waitForExistAndClick(Menu.Improve.Modules.alerts_subTab))
     });
     test('should click on "Configure" button for "' + moduleTechName + '"', () => client.waitForExistAndClick(ModulePage.configure_link.replace('%moduleTechName', moduleTechName), 2000));
     test('should set the "Account owner" input', () => client.waitAndSetValue(ModulePage.ModuleBankTransferPage.account_owner_input, 'Demo'));
@@ -357,7 +357,7 @@ module.exports = {
     test('should click on "Save" button', () => client.waitForExistAndClick(ModulePage.ModuleBankTransferPage.save_button));
     test('should go to "Modules > Module Manager" page', () => client.goToSubtabMenuPage(Menu.Improve.Modules.modules_menu, Menu.Improve.Modules.modules_manager_submenu));
     test('should click on "Alerts" tab', () => client.waitForExistAndClick(Menu.Improve.Modules.alerts_subTab));
-    test('should check that the "Alerts number" is decremented with 1', () => {
+    test('should check that the "Alerts number" is decremented by 1', () => {
       return promise
         .then(() => client.waitForVisible(ModulePage.notification_number))
         .then(() => client.checkTextValue(ModulePage.notification_number, (tab['notification'] - 1).toString(), 'equal'));
