@@ -224,7 +224,7 @@ scenario('Create, edit a country and activate country restrictions in the Back O
     test('should click on "firstname" button', () => client.waitForExistAndClick(Location.Country.customer_firstname_button));
     test('should click on "Use the last registered format" button', () => client.waitForExistAndClick(Location.Country.use_last_registered_format_button));
     test('should click on "OK" button', () => client.alertAccept());
-    test('should check that the address format is equal to "phone"', () => client.checkTextValue(Location.Country.address_format_field_textarea, 'phone\nidentification dni', 'equal'));
+    test('should check that the address format is equal to "phone"', () => client.checkTextValue(Location.Country.address_format_field_textarea, 'phone\ndni', 'equal'));
     test('should click on "Use the default format" button', () => client.waitForExistAndClick(Location.Country.use_default_format_button));
     test('should click on "OK" button', () => client.alertAccept());
     test('should click on "Save" button', () => client.waitForExistAndClick(Location.Country.save_button));

@@ -19,14 +19,14 @@ module.exports = {
       test('should select All the "product pages"', async () => await client.selectAllOptionsLinkWidget(LinkWidget.select_all_product_page));
       test('should select All the "static content"', async () => await client.selectAllOptionsLinkWidget(LinkWidget.select_all_static_content));
       test('should set "Name" input in french', () => client.waitAndSetValue(LinkWidget.first_custom_content_name_input.replace('%POS','1').replace('%lang','2'), 'Custom Name ' + date_time));
-      test('should set "URL" input in french', () => client.waitAndSetValue(LinkWidget.first_custom_content_url_input.replace('%POS','1').replace('%lang','2'), 'Custom Url ' + date_time));
+      test('should set "URL" input in french', () => client.waitAndSetValue(LinkWidget.first_custom_content_url_input.replace('%POS','1').replace('%lang','2'), 'http://localhost/custom_url'));
       test('should switch input language to english', () => {
         return promise
           .then(() => client.waitForExistAndClick(LinkWidget.custom_content_lang_button.replace('%POS','1')))
           .then(() => client.waitForVisibleAndClick(LinkWidget.custom_content_lang_span.replace('%lang','en').replace('%POS','1')));
       });
       test('should set "Name" input in english', () => client.waitAndSetValue(LinkWidget.first_custom_content_name_input.replace('%POS','1').replace('%lang','1'), 'Custom Name ' + date_time));
-      test('should set "URL" input in english', () => client.waitAndSetValue(LinkWidget.first_custom_content_url_input.replace('%POS','1').replace('%lang','1'), 'Custom Url ' + date_time));
+      test('should set "URL" input in english', () => client.waitAndSetValue(LinkWidget.first_custom_content_url_input.replace('%POS','1').replace('%lang','1'), 'http://localhost/custom_url'));
       test('should click on "Add" button', () => client.scrollWaitForExistAndClick(LinkWidget.add_custom_content_button));
       test('should check that a new custom content bloc is added successfully', () => {
         return promise

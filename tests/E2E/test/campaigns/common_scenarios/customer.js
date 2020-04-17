@@ -168,6 +168,7 @@ module.exports = {
       if (password) {
         test('should set the "Password" input', () => client.waitAndSetValue(accountPage.password_account_input, date_time + customerData.password));
       }
+      test('should click on GPDR checkbox', () => client.waitForExistAndClick(accountPage.gdpr_checkbox_input));
       test('should click on "CONTINUE" button', () => client.waitForExistAndClick(accountPage.customer_form_continue_button));
     }, 'customer');
   },

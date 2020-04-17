@@ -31,6 +31,7 @@
     "json": "^9.0",
     "minimist": "^1.2",
     "mocha": "^5.2.0",
+    "natives": "^1.1.6",
     "node-uuid": "^1.4",
     "parsed-url": "0.0.0",
     "q": "^1.4",
