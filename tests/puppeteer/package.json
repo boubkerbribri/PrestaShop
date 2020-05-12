@@ -8,7 +8,7 @@
   "scripts": {
     "linkchecker": "./node_modules/mocha/bin/mocha tools/linkchecker.js",
     "lint": "eslint  --fix --ignore-path .gitignore .",
-    "specific-test": "./node_modules/mocha/bin/mocha campaigns/$TEST_PATH",
+    "specific-test": "./node_modules/mocha/bin/mocha --bail campaigns/$TEST_PATH",
     "sanity-tests": "./node_modules/mocha/bin/mocha campaigns/sanity/*",
     "sanity-travis": "./node_modules/mocha/bin/mocha --bail campaigns/sanity/*",
     "functional-tests": "./node_modules/mocha/bin/mocha --recursive campaigns/functional/*"
@@ -24,7 +24,7 @@
     "url": "git+https://github.com/PrestaShop/PrestaShop.git"
   },
   "keywords": [
-    "puppeteer",
+    "playwright",
     "sanity",
     "functional"
   ],
@@ -38,13 +38,13 @@
     "chai": "^4.2.0",
     "chai-string": "^1.5.0",
     "eslint-config-prestashop": "0.0.2",
+    "faker": "^4.1.0",
     "js-image-generator": "^1.0.2",
     "mocha": "^6.1.4",
     "mochawesome": "^2.3.0",
-    "puppeteer": "^1.18.1",
-    "faker": "^4.1.0",
     "module-alias": "^2.2.2",
-    "pdfjs-dist": "^2.2.228"
+    "pdfjs-dist": "^2.2.228",
+    "playwright": "^1.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
