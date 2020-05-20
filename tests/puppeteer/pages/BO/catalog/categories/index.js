@@ -9,6 +9,7 @@ module.exports = class Categories extends BOBasePage {
     this.successfulUpdateStatusMessage = 'The status has been successfully updated.';
 
     // Selectors
+    this.editHomeCategoryButton = '#main-div .breadcrumb a[href*=\'edit\']';
     // Header links
     this.addNewCategoryLink = '#page-header-desc-configuration-add[title=\'Add new category\']';
     // List of categories
@@ -53,6 +54,11 @@ module.exports = class Categories extends BOBasePage {
     this.categoryGridActionsButton = '#category-grid-actions-button';
     this.gridActionDropDownMenu = 'div.dropdown-menu[aria-labelledby=\'category-grid-actions-button\']';
     this.gridActionExportLink = `${this.gridActionDropDownMenu} a[href*='/export']`;
+    // Pagination selectors
+    this.paginationLimitSelect = '#paginator_select_page_limit';
+    this.paginationLabel = `${this.categoryGridPanel} .col-form-label`;
+    this.paginationNextLink = `${this.categoryGridPanel} #pagination_next_url`;
+    this.paginationPreviousLink = `${this.categoryGridPanel} [aria-label='Previous']`;
   }
 
   /*
@@ -359,5 +365,50 @@ module.exports = class Categories extends BOBasePage {
       + `"${category.description}";`
       + `${category.position - 1};`
       + `${category.status ? 1 : 0}`;
+  }
+
+  /**
+   * Go to edit category page
+   * @returns {Promise<void>}
+   */
+  async goToEditHomeCategoryPage() {
+    await this.waitForSelectorAndClick(this.editHomeCategoryButton);
+  }
+
+  /* Pagination methods */
+  /**
+   * Get pagination label
+   * @return {Promise<string>}
+   */
+  getPaginationLabel() {
+    return this.getTextContent(this.paginationLabel);
+  }
+
+  /**
+   * Select pagination limit
+   * @param number
+   * @returns {Promise<string>}
+   */
+  async selectPaginationLimit(number) {
+    await this.selectByVisibleText(this.paginationLimitSelect, number);
+    return this.getPaginationLabel();
+  }
+
+  /**
+   * Click on next
+   * @returns {Promise<string>}
+   */
+  async paginationNext() {
+    await this.clickAndWaitForNavigation(this.paginationNextLink);
+    return this.getPaginationLabel();
+  }
+
+  /**
+   * Click on previous
+   * @returns {Promise<string>}
+   */
+  async paginationPrevious() {
+    await this.clickAndWaitForNavigation(this.paginationPreviousLink);
+    return this.getPaginationLabel();
   }
 };
