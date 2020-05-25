@@ -84,7 +84,15 @@ describe('Enable partner offer', async () => {
       await this.pageObjects.loginFOPage.goToCreateAccountPage();
       const isPartnerOfferVisible = await this.pageObjects.loginFOPage.isPartnerOfferVisible();
       await expect(isPartnerOfferVisible).to.be.equal(test.args.enable);
+<<<<<<< HEAD
       page = await this.pageObjects.loginFOPage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+      // Go back to BO
+      page = await this.pageObjects.loginFOPage.closePage(browser, 1);
+=======
+      page = await this.pageObjects.loginFOPage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
     });
   });

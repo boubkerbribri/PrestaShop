@@ -120,8 +120,18 @@ describe('Enable re-display cart at login', async () => {
       if (test.args.enable === true) expect(notificationsNumber).to.be.above(0);
       else expect(notificationsNumber).to.be.equal(0);
       // Logout from FO
+<<<<<<< HEAD
       await this.pageObjects.foBasePage.logout();
       page = await this.pageObjects.homePage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+      await this.pageObjects.homePage.logout();
+
+      // Go back to BO
+      page = await this.pageObjects.homePage.closePage(browser, 1);
+=======
+      await this.pageObjects.foBasePage.logout();
+      page = await this.pageObjects.homePage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
     });
   });

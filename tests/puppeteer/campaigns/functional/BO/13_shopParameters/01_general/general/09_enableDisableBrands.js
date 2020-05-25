@@ -104,7 +104,14 @@ describe('Enable display brands', async () => {
 
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', `goBackToBo_${test.args.action}`, baseContext);
+<<<<<<< HEAD
       page = await this.pageObjects.siteMapPage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+      page = await this.pageObjects.siteMapPage.closePage(browser, 1);
+=======
+      page = await this.pageObjects.siteMapPage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.brandsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.brandsPage.pageTitle);

@@ -81,7 +81,15 @@ describe('Enable/Disable shop', async () => {
     this.pageObjects = await init();
     const pageContent = await this.pageObjects.homePage.getTextContent(this.pageObjects.homePage.content);
     await expect(pageContent).to.equal(this.pageObjects.maintenancePage.maintenanceText);
+<<<<<<< HEAD
     page = await this.pageObjects.homePage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+    // Go back to BO
+    page = await this.pageObjects.homePage.closePage(browser, 1);
+=======
+    page = await this.pageObjects.homePage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 
@@ -97,7 +105,14 @@ describe('Enable/Disable shop', async () => {
     this.pageObjects = await init();
     const pageContent = await this.pageObjects.homePage.getTextContent(this.pageObjects.homePage.content);
     await expect(pageContent).to.equal(newMaintenanceText);
+<<<<<<< HEAD
     page = await this.pageObjects.homePage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+    page = await this.pageObjects.homePage.closePage(browser, 1);
+=======
+    page = await this.pageObjects.homePage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 
@@ -123,7 +138,14 @@ describe('Enable/Disable shop', async () => {
     await expect(pageContent).to.not.equal(this.pageObjects.maintenancePage.maintenanceText);
     const result = await this.pageObjects.homePage.isHomePage();
     await expect(result).to.be.true;
+<<<<<<< HEAD
     page = await this.pageObjects.homePage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+    page = await this.pageObjects.homePage.closePage(browser, 1);
+=======
+    page = await this.pageObjects.homePage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 
@@ -143,7 +165,14 @@ describe('Enable/Disable shop', async () => {
     await expect(pageContent).to.not.equal(this.pageObjects.maintenancePage.maintenanceText);
     const result = await this.pageObjects.homePage.isHomePage();
     await expect(result).to.be.true;
+<<<<<<< HEAD
     page = await this.pageObjects.homePage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+    page = await this.pageObjects.homePage.closePage(browser, 1);
+=======
+    page = await this.pageObjects.homePage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 });

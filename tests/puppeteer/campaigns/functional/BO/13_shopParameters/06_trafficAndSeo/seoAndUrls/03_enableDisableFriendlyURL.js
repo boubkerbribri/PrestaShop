@@ -65,7 +65,15 @@ describe('Enable/Disable friendly URL', async () => {
     this.pageObjects = await init();
     const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('index.php');
+<<<<<<< HEAD
     page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+    // Go back to BO
+    page = await this.pageObjects.foHomePage.closePage(browser, 1);
+=======
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 
@@ -82,7 +90,15 @@ describe('Enable/Disable friendly URL', async () => {
     await this.pageObjects.foBasePage.changeLanguage('en');
     const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('/en/');
+<<<<<<< HEAD
     page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+    // Go back to BO
+    page = await this.pageObjects.foHomePage.closePage(browser, 1);
+=======
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 });

@@ -141,7 +141,14 @@ describe('Enable/Disable catalog mode', async () => {
           await expect(isVisible).to.equal(showPrices.args.isPriceExist);
           isVisible = await this.pageObjects.productPage.isAddToCartButtonDisplayed();
           await expect(isVisible).to.equal(showPrices.args.isAddToCartExist);
+<<<<<<< HEAD
           page = await this.pageObjects.productPage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+          page = await this.pageObjects.productPage.closePage(browser, 1);
+=======
+          page = await this.pageObjects.productPage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
           this.pageObjects = await init();
         });
       });
@@ -178,7 +185,14 @@ describe('Enable/Disable catalog mode', async () => {
         await expect(isVisible).to.be.true;
         isVisible = await this.pageObjects.productPage.isAddToCartButtonDisplayed();
         await expect(isVisible).to.be.true;
+<<<<<<< HEAD
         page = await this.pageObjects.productPage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+        page = await this.pageObjects.productPage.closePage(browser, 1);
+=======
+        page = await this.pageObjects.productPage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
         this.pageObjects = await init();
       });
     }

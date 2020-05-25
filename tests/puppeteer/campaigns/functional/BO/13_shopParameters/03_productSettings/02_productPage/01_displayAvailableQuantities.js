@@ -87,7 +87,14 @@ describe('Display available quantities on the product page', async () => {
       await this.pageObjects.homePage.goToProductPage(1);
       const quantityIsVisible = await this.pageObjects.productPage.isQuantityDisplayed();
       await expect(quantityIsVisible).to.be.equal(test.args.enable);
+<<<<<<< HEAD
       page = await this.pageObjects.homePage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+      page = await this.pageObjects.homePage.closePage(browser, 1);
+=======
+      page = await this.pageObjects.homePage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
     });
   });

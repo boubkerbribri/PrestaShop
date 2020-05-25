@@ -157,7 +157,14 @@ describe('Set label out-of-stock with allowed/denied backorders', async () => {
 
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${index}`, baseContext);
+<<<<<<< HEAD
       page = await this.pageObjects.productPage.closePage(browser, 1);
+||||||| parent of 3c466c2dc5... Go to tab 0 after close page
+
+      page = await this.pageObjects.productPage.closePage(browser, 1);
+=======
+      page = await this.pageObjects.productPage.closePage(browser, 0);
+>>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.productSettingsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.productSettingsPage.pageTitle);
