@@ -1,21 +1,18 @@
 require('module-alias/register');
-
+// Using chai
 const {expect} = require('chai');
-
-// Import utils
 const helper = require('@utils/helpers');
 const loginCommon = require('@commonTests/loginBO');
-
-// Import pages
+// Importing pages
+const BOBasePage = require('@pages/BO/BObasePage');
 const LoginPage = require('@pages/BO/login');
 const DashboardPage = require('@pages/BO/dashboard');
 const SeoAndUrlsPage = require('@pages/BO/shopParameters/trafficAndSeo/seoAndUrls');
-const FOHomePage = require('@pages/FO/home');
-
-// Import test context
+const FOBasePage = require('@pages/FO/FObasePage');
+// Test context imports
 const testContext = require('@utils/testContext');
 
-const baseContext = 'functional_BO_shopParameters_TrafficAndSeo_seoAndUrls_enableDisableFriendlyUrl';
+const baseContext = 'functional_BO_shopParams_TrafficAndSeo_seoAndUrls_enableDisableFriendlyUrl';
 
 let browser;
 let page;
@@ -23,10 +20,11 @@ let page;
 // Init objects needed
 const init = async function () {
   return {
+    boBasePage: new BOBasePage(page),
     loginPage: new LoginPage(page),
     dashboardPage: new DashboardPage(page),
     seoAndUrlsPage: new SeoAndUrlsPage(page),
-    foHomePage: new FOHomePage(page),
+    foBasePage: new FOBasePage(page),
   };
 };
 
@@ -35,10 +33,8 @@ describe('Enable/Disable friendly URL', async () => {
   before(async function () {
     browser = await helper.createBrowser();
     page = await helper.newTab(browser);
-
     this.pageObjects = await init();
   });
-
   after(async () => {
     await helper.closeBrowser(browser);
   });
@@ -48,61 +44,45 @@ describe('Enable/Disable friendly URL', async () => {
 
   it('should go to \'Shop parameters > SEO and Urls\' page', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'goToSeoAndUrlsPage', baseContext);
-
-    await this.pageObjects.dashboardPage.goToSubMenu(
-      this.pageObjects.dashboardPage.shopParametersParentLink,
-      this.pageObjects.dashboardPage.trafficAndSeoLink,
+    await this.pageObjects.boBasePage.goToSubMenu(
+      this.pageObjects.boBasePage.shopParametersParentLink,
+      this.pageObjects.boBasePage.trafficAndSeoLink,
     );
-
-    await this.pageObjects.seoAndUrlsPage.closeSfToolBar();
-
+    await this.pageObjects.boBasePage.closeSfToolBar();
     const pageTitle = await this.pageObjects.seoAndUrlsPage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.seoAndUrlsPage.pageTitle);
   });
 
   it('should disable friendly URL', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'disableFriendlyUrl', baseContext);
-
     const result = await this.pageObjects.seoAndUrlsPage.enableDisableFriendlyURL(false);
     await expect(result).to.contains(this.pageObjects.seoAndUrlsPage.successfulSettingsUpdateMessage);
   });
 
   it('should go to FO and check the URL', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'checkDisabledFriendlyUrlFO', baseContext);
-
-    // Go to FO
-    page = await this.pageObjects.seoAndUrlsPage.viewMyShop();
+    page = await this.pageObjects.boBasePage.viewMyShop();
     this.pageObjects = await init();
-
-    const url = await this.pageObjects.foHomePage.getCurrentURL();
+    const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('index.php');
-
-    // Go back to BO
-    page = await this.pageObjects.foHomePage.closePage(browser, 1);
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
     this.pageObjects = await init();
   });
 
   it('should enable friendly URL', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'enableFriendlyUrl', baseContext);
-
     const result = await this.pageObjects.seoAndUrlsPage.enableDisableFriendlyURL(true);
     await expect(result).to.contains(this.pageObjects.seoAndUrlsPage.successfulSettingsUpdateMessage);
   });
 
   it('should go to FO and check the URL', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'checkEnabledFriendlyUrlFO', baseContext);
-
-    // Go to FO
-    page = await this.pageObjects.seoAndUrlsPage.viewMyShop();
+    page = await this.pageObjects.boBasePage.viewMyShop();
     this.pageObjects = await init();
-
-    await this.pageObjects.foHomePage.changeLanguage('en');
-
-    const url = await this.pageObjects.foHomePage.getCurrentURL();
+    await this.pageObjects.foBasePage.changeLanguage('en');
+    const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('/en/');
-
-    // Go back to BO
-    page = await this.pageObjects.foHomePage.closePage(browser, 1);
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
     this.pageObjects = await init();
   });
 });
