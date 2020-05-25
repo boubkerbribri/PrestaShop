@@ -1,12 +1,13 @@
 require('module-alias/register');
+const testContext = require('@utils/testContext');
+
+const baseContext = 'functional_BO_productSettings_displayDiscountedPrice';
 // Using chai
 const {expect} = require('chai');
-
-// Import utils
 const helper = require('@utils/helpers');
 const loginCommon = require('@commonTests/loginBO');
-
-// Import pages
+// Importing pages
+const BOBasePage = require('@pages/BO/BObasePage');
 const LoginPage = require('@pages/BO/login');
 const DashboardPage = require('@pages/BO/dashboard');
 const ProductSettingsPage = require('@pages/BO/shopParameters/productSettings');
@@ -15,36 +16,27 @@ const CatalogPriceRulesPage = require('@pages/BO/catalog/discounts/catalogPriceR
 const AddCatalogPriceRulePage = require('@pages/BO/catalog/discounts/catalogPriceRules/add');
 const ProductPage = require('@pages/FO/product');
 const HomePage = require('@pages/FO/home');
-
-// Import data
+// Importing data
 const PriceRuleFaker = require('@data/faker/catalogPriceRule');
-
-// import test context
-const testContext = require('@utils/testContext');
-
-const baseContext = 'functional_BO_shopParameters_productSettings_displayDiscountedPrice';
 
 let browser;
 let page;
-
-const priceRuleData = new PriceRuleFaker(
-  {
-    currency: 'All currencies',
-    country: 'All countries',
-    group: 'All groups',
-    reductionType: 'Amount',
-    reductionTax: 'Tax included',
-    fromQuantity: 3,
-    reduction: 20,
-  },
-);
-
+const priceRuleData = new PriceRuleFaker({
+  currency: 'All currencies',
+  country: 'All countries',
+  group: 'All groups',
+  reductionType: 'Amount',
+  reductionTax: 'Tax included',
+  fromQuantity: 3,
+  reduction: 20,
+});
 const unitDiscountToCheck = '€20.00';
 const unitPriceToCheck = '€2.94';
 
 // Init objects needed
 const init = async function () {
   return {
+    boBasePage: new BOBasePage(page),
     loginPage: new LoginPage(page),
     dashboardPage: new DashboardPage(page),
     productSettingsPage: new ProductSettingsPage(page),
@@ -60,11 +52,9 @@ describe('Enable/Disable display discounted price', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-
     page = await helper.newTab(browser);
     this.pageObjects = await init();
   });
-
   after(async () => {
     await helper.closeBrowser(browser);
   });
@@ -74,19 +64,16 @@ describe('Enable/Disable display discounted price', async () => {
 
   it('should go to \'Catalog > Discounts\' page', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'goToDiscountsPage', baseContext);
-
-    await this.pageObjects.dashboardPage.goToSubMenu(
-      this.pageObjects.dashboardPage.catalogParentLink,
-      this.pageObjects.dashboardPage.discountsLink,
+    await this.pageObjects.boBasePage.goToSubMenu(
+      this.pageObjects.boBasePage.catalogParentLink,
+      this.pageObjects.boBasePage.discountsLink,
     );
-
     const pageTitle = await this.pageObjects.cartRulesPage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.cartRulesPage.pageTitle);
   });
 
   it('should go to \'Catalog Price Rules\' tab', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'goToCatalogPriceRulesTab', baseContext);
-
     await this.pageObjects.cartRulesPage.goToCatalogPriceRulesTab();
     const pageTitle = await this.pageObjects.catalogPriceRulesPage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.catalogPriceRulesPage.pageTitle);
@@ -94,25 +81,20 @@ describe('Enable/Disable display discounted price', async () => {
 
   it('should create new catalog price rule', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'createCatalogPriceRule', baseContext);
-
     await this.pageObjects.catalogPriceRulesPage.goToAddNewCatalogPriceRulePage();
     const pageTitle = await this.pageObjects.addCatalogPriceRulePage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.addCatalogPriceRulePage.pageTitle);
-
     const validationMessage = await this.pageObjects.addCatalogPriceRulePage.createEditCatalogPriceRule(priceRuleData);
     await expect(validationMessage).to.contains(this.pageObjects.catalogPriceRulesPage.successfulCreationMessage);
   });
 
   it('should go to \'Shop parameters > Product Settings\' page', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'goToProductSettingsPage', baseContext);
-
-    await this.pageObjects.addCatalogPriceRulePage.goToSubMenu(
-      this.pageObjects.addCatalogPriceRulePage.shopParametersParentLink,
-      this.pageObjects.addCatalogPriceRulePage.productSettingsLink,
+    await this.pageObjects.boBasePage.goToSubMenu(
+      this.pageObjects.boBasePage.shopParametersParentLink,
+      this.pageObjects.boBasePage.productSettingsLink,
     );
-
-    await this.pageObjects.productSettingsPage.closeSfToolBar();
-
+    await this.pageObjects.boBasePage.closeSfToolBar();
     const pageTitle = await this.pageObjects.productSettingsPage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.productSettingsPage.pageTitle);
   });
@@ -129,7 +111,6 @@ describe('Enable/Disable display discounted price', async () => {
       },
     },
   ];
-
   tests.forEach((test, index) => {
     it(`should ${test.args.action} display discounted price`, async function () {
       await testContext.addContextItem(
@@ -138,11 +119,9 @@ describe('Enable/Disable display discounted price', async () => {
         `${test.args.action}DisplayDiscountedPrice`,
         baseContext,
       );
-
       const result = await this.pageObjects.productSettingsPage.setDisplayDiscountedPriceStatus(
         test.args.enable,
       );
-
       await expect(result).to.contains(this.pageObjects.productSettingsPage.successfulUpdateMessage);
     });
 
@@ -150,29 +129,23 @@ describe('Enable/Disable display discounted price', async () => {
       await testContext.addContextItem(
         this,
         'testIdentifier',
-        `checkUnitValue${this.pageObjects.productSettingsPage.uppercaseFirstCharacter(test.args.action)}`,
+        `checkUnitValue${this.pageObjects.boBasePage.uppercaseFirstCharacter(test.args.action)}`,
         baseContext,
       );
-
       page = await this.pageObjects.productSettingsPage.viewMyShop();
       this.pageObjects = await init();
-
       await this.pageObjects.homePage.changeLanguage('en');
       await this.pageObjects.homePage.goToProductPage(1);
-
       const columnTitle = await this.pageObjects.productPage.getDiscountColumnTitle();
       await expect(columnTitle).to.equal(test.args.textColumnToCheck);
-
       const columnValue = await this.pageObjects.productPage.getDiscountValue();
       await expect(columnValue).to.equal(test.args.valueToCheck);
     });
 
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${index}`, baseContext);
-
-      page = await this.pageObjects.productPage.closePage(browser, 1);
+      page = await this.pageObjects.productPage.closePage(browser, 0);
       this.pageObjects = await init();
-
       const pageTitle = await this.pageObjects.productSettingsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.productSettingsPage.pageTitle);
     });
@@ -180,19 +153,16 @@ describe('Enable/Disable display discounted price', async () => {
 
   it('should go to \'Catalog > Discounts\' page', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'goToDiscountsPageToDeletePriceRule', baseContext);
-
-    await this.pageObjects.productSettingsPage.goToSubMenu(
-      this.pageObjects.productSettingsPage.catalogParentLink,
-      this.pageObjects.productSettingsPage.discountsLink,
+    await this.pageObjects.boBasePage.goToSubMenu(
+      this.pageObjects.boBasePage.catalogParentLink,
+      this.pageObjects.boBasePage.discountsLink,
     );
-
     const pageTitle = await this.pageObjects.cartRulesPage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.cartRulesPage.pageTitle);
   });
 
   it('should go to \'Catalog Price Rules\' tab', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'goToCatalogPriceRuleTabToDeletePriceRule', baseContext);
-
     await this.pageObjects.cartRulesPage.goToCatalogPriceRulesTab();
     const pageTitle = await this.pageObjects.catalogPriceRulesPage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.catalogPriceRulesPage.pageTitle);
@@ -200,7 +170,6 @@ describe('Enable/Disable display discounted price', async () => {
 
   it('should delete catalog price rule', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'deleteCatalogPriceRule', baseContext);
-
     const deleteTextResult = await this.pageObjects.catalogPriceRulesPage.deleteCatalogPriceRule(priceRuleData.name);
     await expect(deleteTextResult).to.contains(this.pageObjects.catalogPriceRulesPage.successfulDeleteMessage);
   });

@@ -1,23 +1,20 @@
 require('module-alias/register');
+const testContext = require('@utils/testContext');
 
+const baseContext = 'functional_BO_customerSettings_customers_enablePartnerOffer';
+// Using chai
 const {expect} = require('chai');
-
-// Import utils
 const helper = require('@utils/helpers');
 const loginCommon = require('@commonTests/loginBO');
-
-// Import pages
+// Importing pages
+const BOBasePage = require('@pages/BO/BObasePage');
 const LoginPage = require('@pages/BO/login');
 const DashboardPage = require('@pages/BO/dashboard');
 const CustomerSettingsPage = require('@pages/BO/shopParameters/customerSettings');
 const {options} = require('@pages/BO/shopParameters/customerSettings/options');
-const FOHomePage = require('@pages/FO/home');
+const FOBasePage = require('@pages/FO/FObasePage');
 const LoginFOPage = require('@pages/FO/login');
-
-// Import test context
-const testContext = require('@utils/testContext');
-
-const baseContext = 'functional_BO_shopParameters_customerSettings_customers_askForBirthDate';
+// Importing data
 
 let browser;
 let page;
@@ -25,10 +22,11 @@ let page;
 // Init objects needed
 const init = async function () {
   return {
+    boBasePage: new BOBasePage(page),
     loginPage: new LoginPage(page),
     dashboardPage: new DashboardPage(page),
     customerSettingsPage: new CustomerSettingsPage(page),
-    foHomePage: new FOHomePage(page),
+    foBasePage: new FOBasePage(page),
     loginFOPage: new LoginFOPage(page),
   };
 };
@@ -38,10 +36,8 @@ describe('Enable partner offer', async () => {
   before(async function () {
     browser = await helper.createBrowser();
     page = await helper.newTab(browser);
-
     this.pageObjects = await init();
   });
-
   after(async () => {
     await helper.closeBrowser(browser);
   });
@@ -51,14 +47,11 @@ describe('Enable partner offer', async () => {
 
   it('should go to \'Shop parameters > Customer Settings\' page', async function () {
     await testContext.addContextItem(this, 'testIdentifier', 'goToCustomerSettingsPage', baseContext);
-
-    await this.pageObjects.dashboardPage.goToSubMenu(
-      this.pageObjects.dashboardPage.shopParametersParentLink,
-      this.pageObjects.dashboardPage.customerSettingsLink,
+    await this.pageObjects.boBasePage.goToSubMenu(
+      this.pageObjects.boBasePage.shopParametersParentLink,
+      this.pageObjects.boBasePage.customerSettingsLink,
     );
-
-    await this.pageObjects.customerSettingsPage.closeSfToolBar();
-
+    await this.pageObjects.boBasePage.closeSfToolBar();
     const pageTitle = await this.pageObjects.customerSettingsPage.getPageTitle();
     await expect(pageTitle).to.contains(this.pageObjects.customerSettingsPage.pageTitle);
   });
@@ -67,16 +60,13 @@ describe('Enable partner offer', async () => {
     {args: {action: 'disable', enable: false}},
     {args: {action: 'enable', enable: true}},
   ];
-
   tests.forEach((test) => {
     it(`should ${test.args.action} partner offer`, async function () {
       await testContext.addContextItem(this, 'testIdentifier', `${test.args.action}PartnerOffer`, baseContext);
-
       const result = await this.pageObjects.customerSettingsPage.setOptionStatus(
         options.OPTION_PARTNER_OFFER,
         test.args.enable,
       );
-
       await expect(result).to.contains(this.pageObjects.customerSettingsPage.successfulUpdateMessage);
     });
 
@@ -84,27 +74,17 @@ describe('Enable partner offer', async () => {
       await testContext.addContextItem(
         this,
         'testIdentifier',
-        `checkIsPartnerOffer${this.pageObjects.customerSettingsPage.uppercaseFirstCharacter(test.args.action)}`,
+        `checkIsPartnerOffer${this.pageObjects.boBasePage.uppercaseFirstCharacter(test.args.action)}`,
         baseContext,
       );
-
-      // Go to FO
-      page = await this.pageObjects.customerSettingsPage.viewMyShop();
+      page = await this.pageObjects.boBasePage.viewMyShop();
       this.pageObjects = await init();
-
-      // Change language in FO
-      await this.pageObjects.foHomePage.changeLanguage('en');
-
-      // Go to create account page
-      await this.pageObjects.foHomePage.goToLoginPage();
+      await this.pageObjects.foBasePage.changeLanguage('en');
+      await this.pageObjects.foBasePage.goToLoginPage();
       await this.pageObjects.loginFOPage.goToCreateAccountPage();
-
-      // Check partner offer
       const isPartnerOfferVisible = await this.pageObjects.loginFOPage.isPartnerOfferVisible();
       await expect(isPartnerOfferVisible).to.be.equal(test.args.enable);
-
-      // Go back to BO
-      page = await this.pageObjects.loginFOPage.closePage(browser, 1);
+      page = await this.pageObjects.loginFOPage.closePage(browser, 0);
       this.pageObjects = await init();
     });
   });
