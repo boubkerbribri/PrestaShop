@@ -27,7 +27,6 @@ const baseContext = 'functional_BO_orders_orders_checkInvoiceDownloadedFromList'
 let browser;
 let browserContext;
 let page;
-let invoiceFilename;
 let filePath;
 
 // Init objects needed

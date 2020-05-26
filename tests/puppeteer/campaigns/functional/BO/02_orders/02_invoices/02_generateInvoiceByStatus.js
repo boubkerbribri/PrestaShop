@@ -4,7 +4,6 @@ const {expect} = require('chai');
 const helper = require('@utils/helpers');
 const loginCommon = require('@commonTests/loginBO');
 const {Statuses} = require('@data/demo/orderStatuses');
-const {Invoices} = require('@data/demo/invoices');
 const files = require('@utils/files');
 // Importing pages
 const LoginPage = require('@pages/BO/login');
