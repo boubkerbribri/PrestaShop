@@ -128,15 +128,8 @@ describe('Choose quantity discount based on', async () => {
     await this.pageObjects.foProductPage.addProductToTheCart(1, secondAttributeToChoose, true);
     const priceTTC = await this.pageObjects.cartPage.getTTCPrice();
     await expect(priceTTC).to.equal(firstCartTotalTTC);
-<<<<<<< HEAD
-    page = await this.pageObjects.cartPage.closePage(browser, 1);
-||||||| parent of 3c466c2dc5... Go to tab 0 after close page
-
-    page = await this.pageObjects.cartPage.closePage(browser, 1);
-=======
 
     page = await this.pageObjects.cartPage.closePage(browser, 0);
->>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 
@@ -163,15 +156,8 @@ describe('Choose quantity discount based on', async () => {
     await this.pageObjects.foProductPage.goToCartPage();
     const priceTTC = await this.pageObjects.cartPage.getTTCPrice();
     await expect(priceTTC).to.equal(secondCartTotalTTC);
-<<<<<<< HEAD
-    page = await this.pageObjects.cartPage.closePage(browser, 1);
-||||||| parent of 3c466c2dc5... Go to tab 0 after close page
-
-    page = await this.pageObjects.cartPage.closePage(browser, 1);
-=======
 
     page = await this.pageObjects.cartPage.closePage(browser, 0);
->>>>>>> 3c466c2dc5... Go to tab 0 after close page
     this.pageObjects = await init();
   });
 

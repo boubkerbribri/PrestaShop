@@ -113,14 +113,7 @@ describe('Display remaining quantities', async () => {
       await this.pageObjects.searchResultsPage.goToProductPage(1);
       const lastQuantityIsVisible = await this.pageObjects.productPage.isAvailabilityQuantityDisplayed();
       await expect(lastQuantityIsVisible).to.be.equal(test.args.exist);
-<<<<<<< HEAD
-      page = await this.pageObjects.productPage.closePage(browser, 1);
-||||||| parent of 3c466c2dc5... Go to tab 0 after close page
-
-      page = await this.pageObjects.productPage.closePage(browser, 1);
-=======
       page = await this.pageObjects.productPage.closePage(browser, 0);
->>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
     });
   });

@@ -98,23 +98,9 @@ describe('Update number of product displayed on FO', async () => {
       it(`should check that number of products is equal to '${test.args.numberOfProductsPerPage}'`, async function () {
         await testContext.addContextItem(this, 'testIdentifier', `checkNumberOfProduct${index + 1}`, baseContext);
         const numberOfProducts = await this.pageObjects.categoryPageFO.getNumberOfProductsDisplayed();
-<<<<<<< HEAD
-        await expect(numberOfProducts, 'Number of product displayed is incorrect')
-          .to.equal(test.args.numberOfProductsPerPage);
-        page = await this.pageObjects.homePageFO.closePage(browser, 1);
-||||||| parent of 3c466c2dc5... Go to tab 0 after close page
-
-        await expect(
-          numberOfProducts,
-          'Number of product displayed is incorrect',
-        ).to.equal(test.args.numberOfProductsPerPage);
-
-        page = await this.pageObjects.homePageFO.closePage(browser, 1);
-=======
         await expect(numberOfProducts, 'Number of product displayed is incorrect')
           .to.equal(test.args.numberOfProductsPerPage);
         page = await this.pageObjects.homePageFO.closePage(browser, 0);
->>>>>>> 3c466c2dc5... Go to tab 0 after close page
         this.pageObjects = await init();
       });
     });

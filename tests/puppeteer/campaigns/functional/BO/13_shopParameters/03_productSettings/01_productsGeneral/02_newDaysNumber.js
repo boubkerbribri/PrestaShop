@@ -75,14 +75,7 @@ describe('Number of days for which the product is considered \'new\'', async () 
       this.pageObjects = await init();
       const isNewFlagVisible = await this.pageObjects.homePage.isNewFlagVisible(1);
       await expect(isNewFlagVisible).to.be.equal(test.args.exist);
-<<<<<<< HEAD
-      page = await this.pageObjects.homePage.closePage(browser, 1);
-||||||| parent of 3c466c2dc5... Go to tab 0 after close page
-
-      page = await this.pageObjects.homePage.closePage(browser, 1);
-=======
       page = await this.pageObjects.homePage.closePage(browser, 0);
->>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
     });
   });

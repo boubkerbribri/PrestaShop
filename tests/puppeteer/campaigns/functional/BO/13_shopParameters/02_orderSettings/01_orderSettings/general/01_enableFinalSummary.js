@@ -116,14 +116,7 @@ describe('Enable final summary', async () => {
 
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', `${test.args.action}CheckAndBackToBO`, baseContext);
-<<<<<<< HEAD
-      page = await this.pageObjects.orderConfirmationPage.closePage(browser, 1);
-||||||| parent of 3c466c2dc5... Go to tab 0 after close page
-
-      page = await this.pageObjects.orderConfirmationPage.closePage(browser, 1);
-=======
       page = await this.pageObjects.orderConfirmationPage.closePage(browser, 0);
->>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.orderSettingsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.orderSettingsPage.pageTitle);

@@ -129,15 +129,7 @@ describe('Enable/Disable accented URL', async () => {
       this.pageObjects = await init();
       const url = await this.pageObjects.foBasePage.getCurrentURL();
       await expect(url).to.contains(test.args.productNameInURL.toLowerCase());
-<<<<<<< HEAD
-      page = await this.pageObjects.foBasePage.closePage(browser, 1);
-||||||| parent of 3c466c2dc5... Go to tab 0 after close page
-
-      // Go back to BO
-      page = await this.pageObjects.foHomePage.closePage(browser, 1);
-=======
       page = await this.pageObjects.foBasePage.closePage(browser, 0);
->>>>>>> 3c466c2dc5... Go to tab 0 after close page
       this.pageObjects = await init();
     });
   });
