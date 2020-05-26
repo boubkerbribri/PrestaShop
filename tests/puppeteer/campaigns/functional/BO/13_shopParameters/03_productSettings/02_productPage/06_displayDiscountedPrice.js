@@ -20,6 +20,7 @@ const HomePage = require('@pages/FO/home');
 const PriceRuleFaker = require('@data/faker/catalogPriceRule');
 
 let browser;
+let browserContext;
 let page;
 const priceRuleData = new PriceRuleFaker({
   currency: 'All currencies',
@@ -52,7 +53,8 @@ describe('Enable/Disable display discounted price', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

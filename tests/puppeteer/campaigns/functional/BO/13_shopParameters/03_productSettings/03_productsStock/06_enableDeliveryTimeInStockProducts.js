@@ -15,6 +15,7 @@ const FOProductPage = require('@pages/FO/product');
 const FOHomePage = require('@pages/FO/home');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -33,7 +34,8 @@ describe('Enable delivery time in stocks products', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

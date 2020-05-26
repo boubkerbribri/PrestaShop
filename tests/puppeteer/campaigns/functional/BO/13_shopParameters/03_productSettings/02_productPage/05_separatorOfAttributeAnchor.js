@@ -18,6 +18,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 const {Products} = require('@data/demo/products');
 
 let browser;
+let browserContext;
 let page;
 const productAttributes = ['1', 'size', 's/8', 'color', 'white'];
 
@@ -38,7 +39,8 @@ describe('Update separator of attribute anchor on the product links', async () =
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

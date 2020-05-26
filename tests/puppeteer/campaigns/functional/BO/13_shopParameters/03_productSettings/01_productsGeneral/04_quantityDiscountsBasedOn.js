@@ -19,6 +19,7 @@ const CartPage = require('@pages/FO/cart');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productWithCombinations = new ProductFaker({
   type: 'Standard product',
@@ -66,7 +67,8 @@ describe('Choose quantity discount based on', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

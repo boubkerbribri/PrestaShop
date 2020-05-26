@@ -14,6 +14,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_shopParams_contact_sortContacts';
 
 let browser;
+let browserContext;
 let page;
 let numberOfContacts = 0;
 
@@ -32,7 +33,8 @@ describe('Sort Contacts', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

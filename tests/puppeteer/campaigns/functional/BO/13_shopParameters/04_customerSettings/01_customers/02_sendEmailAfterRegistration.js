@@ -20,6 +20,7 @@ const CustomersPage = require('@pages/BO/customers');
 const CustomerFaker = require('@data/faker/customer');
 
 let browser;
+let browserContext;
 let page;
 const firstCustomerToCreate = new CustomerFaker();
 const secondCustomerToCreate = new CustomerFaker();
@@ -51,7 +52,8 @@ describe('Enable send an email after registration', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

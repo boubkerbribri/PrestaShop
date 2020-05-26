@@ -20,6 +20,7 @@ const CheckoutPage = require('@pages/FO/checkout');
 const {DefaultAccount} = require('@data/demo/customer');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -41,7 +42,8 @@ describe('Enable terms of service', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

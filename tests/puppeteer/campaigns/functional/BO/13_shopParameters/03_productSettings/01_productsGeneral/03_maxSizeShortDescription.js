@@ -17,6 +17,7 @@ const AddProductPage = require('@pages/BO/catalog/products/add');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productData = new ProductFaker({type: 'Standard product', status: false});
 const maxSummarySizeValue = 5;
@@ -44,7 +45,8 @@ describe('Update max size of short description', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

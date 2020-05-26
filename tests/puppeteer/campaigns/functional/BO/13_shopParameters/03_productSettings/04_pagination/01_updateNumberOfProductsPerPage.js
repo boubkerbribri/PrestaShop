@@ -15,6 +15,7 @@ const HomePageFO = require('@pages/FO/home');
 const CategoryPageFO = require('@pages/FO/category');
 
 let browser;
+let browserContext;
 let page;
 const updatedProductPerPage = 5;
 const defaultNumberOfProductsPerPage = 10;
@@ -41,7 +42,8 @@ describe('Update number of product displayed on FO', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
