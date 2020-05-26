@@ -86,7 +86,7 @@ describe('Enable ask for birth date', async () => {
       await this.pageObjects.loginFOPage.goToCreateAccountPage();
       const isBirthDateInputVisible = await this.pageObjects.loginFOPage.isBirthDateVisible();
       await expect(isBirthDateInputVisible).to.be.equal(test.args.enable);
-      page = await this.pageObjects.loginFOPage.closePage(browser, 0);
+      page = await this.pageObjects.loginFOPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

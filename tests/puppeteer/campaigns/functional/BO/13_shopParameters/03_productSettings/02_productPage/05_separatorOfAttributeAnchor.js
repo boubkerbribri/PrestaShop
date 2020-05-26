@@ -82,7 +82,7 @@ describe('Update separator of attribute anchor on the product links', async () =
       await this.pageObjects.searchResultsPage.goToProductPage(1);
       const currentURL = await this.pageObjects.productPage.getProductPageURL();
       await expect(currentURL).to.contains(test.args.attributesInProductLink);
-      page = await this.pageObjects.productPage.closePage(browser, 0);
+      page = await this.pageObjects.productPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

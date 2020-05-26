@@ -67,7 +67,7 @@ describe('Enable/Disable friendly URL', async () => {
     this.pageObjects = await init();
     const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('index.php');
-    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browserContext, 0);
     this.pageObjects = await init();
   });
 
@@ -84,7 +84,7 @@ describe('Enable/Disable friendly URL', async () => {
     await this.pageObjects.foBasePage.changeLanguage('en');
     const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('/en/');
-    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browserContext, 0);
     this.pageObjects = await init();
   });
 });

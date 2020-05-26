@@ -106,7 +106,7 @@ describe('Enable send an email after registration', async () => {
       const connected = await this.pageObjects.loginFOPage.isCustomerConnected();
       await expect(connected, 'Customer is not created in FO').to.be.true;
       await this.pageObjects.loginFOPage.logout();
-      page = await this.pageObjects.loginFOPage.closePage(browser, 0);
+      page = await this.pageObjects.loginFOPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
 

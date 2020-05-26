@@ -141,7 +141,7 @@ describe('Update default product order', async () => {
 
       it('should go back to BO', async function () {
         await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${index + 1}`, baseContext);
-        page = await this.pageObjects.homePageFO.closePage(browser, 0);
+        page = await this.pageObjects.homePageFO.closePage(browserContext, 0);
         this.pageObjects = await init();
         const pageTitle = await this.pageObjects.productSettingsPage.getPageTitle();
         await expect(pageTitle).to.contains(this.pageObjects.productSettingsPage.pageTitle);

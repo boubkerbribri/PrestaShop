@@ -143,7 +143,7 @@ describe('Enable/Disable catalog mode', async () => {
           await expect(isVisible).to.equal(showPrices.args.isPriceExist);
           isVisible = await this.pageObjects.productPage.isAddToCartButtonDisplayed();
           await expect(isVisible).to.equal(showPrices.args.isAddToCartExist);
-          page = await this.pageObjects.productPage.closePage(browser, 0);
+          page = await this.pageObjects.productPage.closePage(browserContext, 0);
           this.pageObjects = await init();
         });
       });
@@ -180,7 +180,7 @@ describe('Enable/Disable catalog mode', async () => {
         await expect(isVisible).to.be.true;
         isVisible = await this.pageObjects.productPage.isAddToCartButtonDisplayed();
         await expect(isVisible).to.be.true;
-        page = await this.pageObjects.productPage.closePage(browser, 0);
+        page = await this.pageObjects.productPage.closePage(browserContext, 0);
         this.pageObjects = await init();
       });
     }

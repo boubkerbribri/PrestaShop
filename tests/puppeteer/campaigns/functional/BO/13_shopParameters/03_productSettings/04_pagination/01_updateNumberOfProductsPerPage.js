@@ -102,7 +102,7 @@ describe('Update number of product displayed on FO', async () => {
         const numberOfProducts = await this.pageObjects.categoryPageFO.getNumberOfProductsDisplayed();
         await expect(numberOfProducts, 'Number of product displayed is incorrect')
           .to.equal(test.args.numberOfProductsPerPage);
-        page = await this.pageObjects.homePageFO.closePage(browser, 0);
+        page = await this.pageObjects.homePageFO.closePage(browserContext, 0);
         this.pageObjects = await init();
       });
     });

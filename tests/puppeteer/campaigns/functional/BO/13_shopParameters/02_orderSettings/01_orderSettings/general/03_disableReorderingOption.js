@@ -105,7 +105,7 @@ describe('Enable reordering option', async () => {
       await testContext.addContextItem(this, 'testIdentifier', `${test.args.action}CheckAndBackToBO`, baseContext);
       // Logout FO
       await this.pageObjects.orderHistoryPage.logout();
-      page = await this.pageObjects.orderHistoryPage.closePage(browser, 0);
+      page = await this.pageObjects.orderHistoryPage.closePage(browserContext, 0);
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.orderSettingsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.orderSettingsPage.pageTitle);

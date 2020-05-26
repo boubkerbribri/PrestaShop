@@ -86,7 +86,7 @@ describe('Enable B2B mode', async () => {
       await this.pageObjects.loginFOPage.goToCreateAccountPage();
       const isCompanyInputVisible = await this.pageObjects.loginFOPage.isCompanyInputVisible();
       await expect(isCompanyInputVisible).to.be.equal(test.args.enable);
-      page = await this.pageObjects.loginFOPage.closePage(browser, 0);
+      page = await this.pageObjects.loginFOPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

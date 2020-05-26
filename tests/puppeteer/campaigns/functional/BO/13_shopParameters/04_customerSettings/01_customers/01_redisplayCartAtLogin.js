@@ -123,7 +123,7 @@ describe('Enable re-display cart at login', async () => {
       else expect(notificationsNumber).to.be.equal(0);
       // Logout from FO
       await this.pageObjects.foBasePage.logout();
-      page = await this.pageObjects.homePage.closePage(browser, 0);
+      page = await this.pageObjects.homePage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

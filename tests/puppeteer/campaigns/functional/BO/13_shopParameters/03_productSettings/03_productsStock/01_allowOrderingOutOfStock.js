@@ -111,7 +111,7 @@ describe('Allow ordering of out-of-stock products', async () => {
       await this.pageObjects.searchResultsPage.goToProductPage(1);
       const lastQuantityIsVisible = await this.pageObjects.productPage.isAddToCartButtonEnabled();
       await expect(lastQuantityIsVisible).to.be.equal(test.args.enable);
-      page = await this.pageObjects.productPage.closePage(browser, 0);
+      page = await this.pageObjects.productPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });
