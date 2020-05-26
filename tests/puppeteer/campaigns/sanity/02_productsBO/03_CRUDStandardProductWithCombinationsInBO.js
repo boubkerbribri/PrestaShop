@@ -16,6 +16,7 @@ const FOProductPage = require('@pages/FO/product');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 let productWithCombinations;
 let editedProductWithCombinations;
@@ -35,7 +36,8 @@ describe('Create, read, update and delete Standard product with combinations in 
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
     const productToCreate = {
       type: 'Standard product',
@@ -86,7 +88,7 @@ describe('Create, read, update and delete Standard product with combinations in 
     page = await this.pageObjects.addProductPage.previewProduct();
     this.pageObjects = await init();
     const result = await this.pageObjects.foProductPage.getProductInformation(productWithCombinations);
-    page = await this.pageObjects.foProductPage.closePage(browser, 0);
+    page = await this.pageObjects.foProductPage.closePage(browserContext, 0);
     this.pageObjects = await init();
     // Check that all Product attribute are correct
     await Promise.all([
@@ -111,7 +113,7 @@ describe('Create, read, update and delete Standard product with combinations in 
 
     this.pageObjects = await init();
     const result = await this.pageObjects.foProductPage.getProductInformation(editedProductWithCombinations);
-    page = await this.pageObjects.foProductPage.closePage(browser, 0);
+    page = await this.pageObjects.foProductPage.closePage(browserContext, 0);
     this.pageObjects = await init();
     // Check that all Product attribute are correct
     await Promise.all([

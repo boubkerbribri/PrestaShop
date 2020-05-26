@@ -15,6 +15,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_shopParams_TrafficAndSeo_seoAndUrls_enableDisableFriendlyUrl';
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -32,7 +33,8 @@ describe('Enable/Disable friendly URL', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -65,7 +67,7 @@ describe('Enable/Disable friendly URL', async () => {
     this.pageObjects = await init();
     const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('index.php');
-    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browserContext, 0);
     this.pageObjects = await init();
   });
 
@@ -82,7 +84,7 @@ describe('Enable/Disable friendly URL', async () => {
     await this.pageObjects.foBasePage.changeLanguage('en');
     const url = await this.pageObjects.seoAndUrlsPage.getCurrentURL();
     await expect(url).to.contains('/en/');
-    page = await this.pageObjects.seoAndUrlsPage.closePage(browser, 0);
+    page = await this.pageObjects.seoAndUrlsPage.closePage(browserContext, 0);
     this.pageObjects = await init();
   });
 });

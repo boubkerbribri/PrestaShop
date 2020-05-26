@@ -21,6 +21,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_design_pages_CRUDPageCategory';
 
 let browser;
+let browserContext;
 let page;
 let numberOfCategories = 0;
 let numberOfPages = 0;
@@ -49,7 +50,8 @@ describe('Create, Read, Update and Delete Page Category and Page', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
     createCategoryData = await (new CategoryPageFaker());
     editCategoryData = await (new CategoryPageFaker({name: `update${createCategoryData.name}`}));
@@ -142,7 +144,7 @@ describe('Create, Read, Update and Delete Page Category and Page', async () => {
       await expect(pageTitle).to.equal(this.pageObjects.siteMapPage.pageTitle);
       const pageCategoryName = await this.pageObjects.siteMapPage.getPageCategoryName(pageCategoryID);
       await expect(pageCategoryName).to.contains(createCategoryData.name);
-      page = await this.pageObjects.foBasePage.closePage(browser, 0);
+      page = await this.pageObjects.foBasePage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });
@@ -206,7 +208,7 @@ describe('Create, Read, Update and Delete Page Category and Page', async () => {
       await expect(metaTitle).to.equal(createPageData.metaTitle);
       const pageContent = await this.pageObjects.cmsPage.getTextContent(this.pageObjects.cmsPage.pageContent);
       await expect(pageContent).to.include(createPageData.content);
-      page = await this.pageObjects.cmsPage.closePage(browser, 0);
+      page = await this.pageObjects.cmsPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
 
@@ -283,7 +285,7 @@ describe('Create, Read, Update and Delete Page Category and Page', async () => {
       await expect(pageTitle).to.equal(this.pageObjects.siteMapPage.pageTitle);
       const pageCategoryName = await this.pageObjects.siteMapPage.getPageCategoryName(pageCategoryID);
       await expect(pageCategoryName).to.contains(editCategoryData.name);
-      page = await this.pageObjects.foBasePage.closePage(browser, 0);
+      page = await this.pageObjects.foBasePage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });
@@ -352,7 +354,7 @@ describe('Create, Read, Update and Delete Page Category and Page', async () => {
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.cmsPage.getTextContent(this.pageObjects.cmsPage.pageTitle);
       await expect(pageTitle).to.include(this.pageObjects.cmsPage.pageNotFound);
-      page = await this.pageObjects.foBasePage.closePage(browser, 0);
+      page = await this.pageObjects.foBasePage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
 

@@ -29,6 +29,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_orders_deliverSlips_deliverSlipsOptions_enableDisableProductImage';
 
 let browser;
+let browserContext;
 let page;
 
 let fileName;
@@ -64,7 +65,8 @@ describe('Test enable/disable product image in delivery slips', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     await helper.setDownloadBehavior(page);
 
     this.pageObjects = await init();
@@ -158,7 +160,7 @@ describe('Test enable/disable product image in delivery slips', async () => {
           await this.pageObjects.foBasePage.logout();
 
           // Go back to BO
-          page = await this.pageObjects.orderConfirmationPage.closePage(browser, 0);
+          page = await this.pageObjects.orderConfirmationPage.closePage(browserContext, 0);
           this.pageObjects = await init();
         });
       });

@@ -35,6 +35,7 @@ let javascriptTextError = '';
 
 let page;
 let browser;
+let browserContext;
 
 describe('Crawl every page for defects and issues', async () => {
   before(async () => {
@@ -44,7 +45,8 @@ describe('Crawl every page for defects and issues', async () => {
 
     // Open browser
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     await page.setExtraHTTPHeaders({
       'Accept-Language': 'fr-FR',
     });
@@ -61,7 +63,6 @@ describe('Crawl every page for defects and issues', async () => {
         response.request().url(),
         response.status().toString(),
       );
-
     });
 
     // Intercepts JS errors
@@ -72,9 +73,7 @@ describe('Crawl every page for defects and issues', async () => {
       outputEntry.jsError.push({
         error: javascriptTextError,
       });
-
     });
-
   });
 
 
@@ -144,9 +143,7 @@ async function checkResponseStatus(url, status) {
     requestTextError = `Request error : ${url} (${status}`;
 
     outputEntry.failed.push({url, status});
-
   } else if (JSON.parse(LOG_PASSED) === true) {
     outputEntry.passed.push({url, status});
   }
-
 }

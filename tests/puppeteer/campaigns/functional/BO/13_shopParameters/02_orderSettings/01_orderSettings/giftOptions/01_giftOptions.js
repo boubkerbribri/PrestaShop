@@ -22,6 +22,7 @@ const {DefaultAccount} = require('@data/demo/customer');
 const {DefaultFrTax} = require('@data/demo/tax');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -44,7 +45,8 @@ describe('Update gift options ', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -269,7 +271,7 @@ describe('Update gift options ', async () => {
           `goBackToBoAfterCheck${test.args.testIdentifier}`,
           baseContext,
         );
-        page = await this.pageObjects.checkoutPage.closePage(browser, 0);
+        page = await this.pageObjects.checkoutPage.closePage(browserContext, 0);
         this.pageObjects = await init();
         const pageTitle = await this.pageObjects.orderSettingsPage.getPageTitle();
         await expect(pageTitle).to.contains(this.pageObjects.orderSettingsPage.pageTitle);

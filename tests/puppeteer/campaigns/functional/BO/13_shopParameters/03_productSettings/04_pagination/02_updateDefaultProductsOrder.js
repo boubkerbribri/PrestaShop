@@ -15,6 +15,7 @@ const HomePageFO = require('@pages/FO/home');
 const CategoryPageFO = require('@pages/FO/category');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -38,7 +39,8 @@ describe('Update default product order', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -139,7 +141,7 @@ describe('Update default product order', async () => {
 
       it('should go back to BO', async function () {
         await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${index + 1}`, baseContext);
-        page = await this.pageObjects.homePageFO.closePage(browser, 0);
+        page = await this.pageObjects.homePageFO.closePage(browserContext, 0);
         this.pageObjects = await init();
         const pageTitle = await this.pageObjects.productSettingsPage.getPageTitle();
         await expect(pageTitle).to.contains(this.pageObjects.productSettingsPage.pageTitle);

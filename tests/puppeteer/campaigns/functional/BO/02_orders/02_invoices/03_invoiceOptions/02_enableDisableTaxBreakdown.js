@@ -33,6 +33,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_orders_invoices_invoiceOptions_enableDisableTaxBreakdown';
 
 let browser;
+let browserContext;
 let page;
 let taxRuleGroupToCreate;
 let firstTaxRuleToCreate;
@@ -76,7 +77,8 @@ describe('Enable tax breakdown', async () => {
   before(async function () {
     // Create new tab
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     await helper.setDownloadBehavior(page);
 
     this.pageObjects = await init();
@@ -275,7 +277,7 @@ describe('Enable tax breakdown', async () => {
         await testContext.addContextItem(this, 'testIdentifier', 'goBackToBo', baseContext);
 
         // Close tab and init other page objects with new current tab
-        page = await this.pageObjects.orderConfirmationPage.closePage(browser, 0);
+        page = await this.pageObjects.orderConfirmationPage.closePage(browserContext, 0);
         this.pageObjects = await init();
 
         const pageTitle = await this.pageObjects.addProductPage.getPageTitle();

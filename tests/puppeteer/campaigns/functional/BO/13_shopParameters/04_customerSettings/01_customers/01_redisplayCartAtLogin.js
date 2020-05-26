@@ -19,6 +19,7 @@ const LoginFOPage = require('@pages/FO/login');
 const {DefaultAccount} = require('@data/demo/customer');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -46,7 +47,8 @@ describe('Enable re-display cart at login', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -121,7 +123,7 @@ describe('Enable re-display cart at login', async () => {
       else expect(notificationsNumber).to.be.equal(0);
       // Logout from FO
       await this.pageObjects.foBasePage.logout();
-      page = await this.pageObjects.homePage.closePage(browser, 0);
+      page = await this.pageObjects.homePage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

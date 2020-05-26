@@ -19,6 +19,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_shopParams_productSetting_catalogMode';
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -45,7 +46,8 @@ describe('Enable/Disable catalog mode', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -141,7 +143,7 @@ describe('Enable/Disable catalog mode', async () => {
           await expect(isVisible).to.equal(showPrices.args.isPriceExist);
           isVisible = await this.pageObjects.productPage.isAddToCartButtonDisplayed();
           await expect(isVisible).to.equal(showPrices.args.isAddToCartExist);
-          page = await this.pageObjects.productPage.closePage(browser, 0);
+          page = await this.pageObjects.productPage.closePage(browserContext, 0);
           this.pageObjects = await init();
         });
       });
@@ -178,7 +180,7 @@ describe('Enable/Disable catalog mode', async () => {
         await expect(isVisible).to.be.true;
         isVisible = await this.pageObjects.productPage.isAddToCartButtonDisplayed();
         await expect(isVisible).to.be.true;
-        page = await this.pageObjects.productPage.closePage(browser, 0);
+        page = await this.pageObjects.productPage.closePage(browserContext, 0);
         this.pageObjects = await init();
       });
     }

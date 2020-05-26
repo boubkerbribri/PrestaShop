@@ -14,6 +14,7 @@ const ProductSettingsPage = require('@pages/BO/shopParameters/productSettings');
 const HomePage = require('@pages/FO/home');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -37,7 +38,8 @@ describe('Number of days for which the product is considered \'new\'', async () 
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -75,7 +77,7 @@ describe('Number of days for which the product is considered \'new\'', async () 
       this.pageObjects = await init();
       const isNewFlagVisible = await this.pageObjects.homePage.isNewFlagVisible(1);
       await expect(isNewFlagVisible).to.be.equal(test.args.exist);
-      page = await this.pageObjects.homePage.closePage(browser, 0);
+      page = await this.pageObjects.homePage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

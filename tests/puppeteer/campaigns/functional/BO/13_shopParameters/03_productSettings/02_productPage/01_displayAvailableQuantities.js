@@ -15,6 +15,7 @@ const HomePage = require('@pages/FO/home');
 const ProductPage = require('@pages/FO/product');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -39,7 +40,8 @@ describe('Display available quantities on the product page', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -87,7 +89,7 @@ describe('Display available quantities on the product page', async () => {
       await this.pageObjects.homePage.goToProductPage(1);
       const quantityIsVisible = await this.pageObjects.productPage.isQuantityDisplayed();
       await expect(quantityIsVisible).to.be.equal(test.args.enable);
-      page = await this.pageObjects.homePage.closePage(browser, 0);
+      page = await this.pageObjects.homePage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

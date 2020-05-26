@@ -20,6 +20,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productData = new ProductFaker({type: 'Standard product', quantity: 0});
 
@@ -42,7 +43,8 @@ describe('Set label out-of-stock with allowed/denied backorders', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -129,7 +131,7 @@ describe('Set label out-of-stock with allowed/denied backorders', async () => {
         `setLabelOutOfStock${index}`,
         baseContext,
       );
-      let result = '';
+      let result;
       if (test.args.enable) {
         result = await this.pageObjects.productSettingsPage.setLabelOosAllowedBackorders(test.args.label);
       } else {
@@ -157,7 +159,7 @@ describe('Set label out-of-stock with allowed/denied backorders', async () => {
 
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${index}`, baseContext);
-      page = await this.pageObjects.productPage.closePage(browser, 0);
+      page = await this.pageObjects.productPage.closePage(browserContext, 0);
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.productSettingsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.productSettingsPage.pageTitle);

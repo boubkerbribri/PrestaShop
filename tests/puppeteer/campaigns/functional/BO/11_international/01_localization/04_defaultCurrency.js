@@ -22,6 +22,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_international_localization_defaultCurrency';
 
 let browser;
+let browserContext;
 let page;
 const contentToImport = {
   importCurrencies: true,
@@ -50,7 +51,8 @@ describe('Update default currency', async () => {
   describe('Import a localization pack', async () => {
     before(async function () {
       browser = await helper.createBrowser();
-      page = await helper.newTab(browser);
+      browserContext = await helper.createBrowserContext(browser);
+      page = await helper.newTab(browserContext);
       this.pageObjects = await init();
     });
     after(async () => {
@@ -101,7 +103,8 @@ describe('Update default currency', async () => {
     describe(`Choose default currency '${test.args.defaultCurrency}' and check it in FO`, async () => {
       before(async function () {
         browser = await helper.createBrowser();
-        page = await helper.newTab(browser);
+        browserContext = await helper.createBrowserContext(browser);
+        page = await helper.newTab(browserContext);
 
         this.pageObjects = await init();
       });
@@ -149,7 +152,7 @@ describe('Update default currency', async () => {
         await expect(defaultCurrency).to.equal(test.args.currency);
 
         // Go back to BO
-        page = await this.pageObjects.foBasePage.closePage(browser, 0);
+        page = await this.pageObjects.foBasePage.closePage(browserContext, 0);
         this.pageObjects = await init();
       });
 

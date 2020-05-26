@@ -19,6 +19,7 @@ const OrderHistoryPage = require('@pages/FO/myAccount/orderHistory');
 const {DefaultAccount} = require('@data/demo/customer');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -39,7 +40,8 @@ describe('Enable reordering option', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -103,7 +105,7 @@ describe('Enable reordering option', async () => {
       await testContext.addContextItem(this, 'testIdentifier', `${test.args.action}CheckAndBackToBO`, baseContext);
       // Logout FO
       await this.pageObjects.orderHistoryPage.logout();
-      page = await this.pageObjects.orderHistoryPage.closePage(browser, 0);
+      page = await this.pageObjects.orderHistoryPage.closePage(browserContext, 0);
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.orderSettingsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.orderSettingsPage.pageTitle);

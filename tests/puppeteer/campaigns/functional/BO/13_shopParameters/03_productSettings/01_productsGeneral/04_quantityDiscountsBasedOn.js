@@ -19,6 +19,7 @@ const CartPage = require('@pages/FO/cart');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productWithCombinations = new ProductFaker({
   type: 'Standard product',
@@ -66,7 +67,8 @@ describe('Choose quantity discount based on', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -129,7 +131,7 @@ describe('Choose quantity discount based on', async () => {
     const priceTTC = await this.pageObjects.cartPage.getTTCPrice();
     await expect(priceTTC).to.equal(firstCartTotalTTC);
 
-    page = await this.pageObjects.cartPage.closePage(browser, 0);
+    page = await this.pageObjects.cartPage.closePage(browserContext, 0);
     this.pageObjects = await init();
   });
 
@@ -157,7 +159,7 @@ describe('Choose quantity discount based on', async () => {
     const priceTTC = await this.pageObjects.cartPage.getTTCPrice();
     await expect(priceTTC).to.equal(secondCartTotalTTC);
 
-    page = await this.pageObjects.cartPage.closePage(browser, 0);
+    page = await this.pageObjects.cartPage.closePage(browserContext, 0);
     this.pageObjects = await init();
   });
 

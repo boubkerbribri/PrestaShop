@@ -18,6 +18,7 @@ const CartPage = require('@pages/FO/cart');
 const CheckoutPage = require('@pages/FO/checkout');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -39,7 +40,8 @@ describe('Enable guest checkout', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -102,7 +104,7 @@ describe('Enable guest checkout', async () => {
 
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', `${test.args.action}CheckAndBackToBO`, baseContext);
-      page = await this.pageObjects.checkoutPage.closePage(browser, 0);
+      page = await this.pageObjects.checkoutPage.closePage(browserContext, 0);
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.orderSettingsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.orderSettingsPage.pageTitle);

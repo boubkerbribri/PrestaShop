@@ -27,6 +27,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_orders_invoices_invoiceOptions_enableDisableProductImage';
 
 let browser;
+let browserContext;
 let page;
 let fileName;
 
@@ -62,7 +63,8 @@ describe('Enable product image in invoices', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     await helper.setDownloadBehavior(page);
 
     this.pageObjects = await init();
@@ -189,7 +191,7 @@ describe('Enable product image in invoices', async () => {
           await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${test.args.action}`, baseContext);
 
           // Close page and init page objects
-          page = await this.pageObjects.orderConfirmationPage.closePage(browser, 0);
+          page = await this.pageObjects.orderConfirmationPage.closePage(browserContext, 0);
           this.pageObjects = await init();
 
           const pageTitle = await this.pageObjects.invoicesPage.getPageTitle();

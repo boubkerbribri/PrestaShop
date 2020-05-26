@@ -25,6 +25,7 @@ const AddressData = require('@data/faker/address');
 const CustomerFaker = require('@data/faker/customer');
 
 let browser;
+let browserContext;
 let page;
 
 let numberOfCustomers = 0;
@@ -54,7 +55,8 @@ describe('Configure group restrictions', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
 
     this.pageObjects = await init();
   });
@@ -307,7 +309,7 @@ describe('Configure group restrictions', async () => {
             await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${index + groupIndex}`, baseContext);
 
             // Close current tab
-            page = await this.pageObjects.foBasePage.closePage(browser, 0);
+            page = await this.pageObjects.foBasePage.closePage(browserContext, 0);
             this.pageObjects = await init();
 
             const pageTitle = await this.pageObjects.preferencesPage.getPageTitle();

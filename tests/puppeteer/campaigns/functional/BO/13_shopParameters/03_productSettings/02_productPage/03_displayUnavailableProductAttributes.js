@@ -20,6 +20,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productData = new ProductFaker({
   type: 'Standard product',
@@ -49,7 +50,8 @@ describe('Display unavailable product attributes on the product page', async () 
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -126,7 +128,7 @@ describe('Display unavailable product attributes on the product page', async () 
         productData.combinations.Color[0],
       );
       await expect(colorIsVisible).to.be.equal(test.args.enable);
-      page = await this.pageObjects.productPage.closePage(browser, 0);
+      page = await this.pageObjects.productPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

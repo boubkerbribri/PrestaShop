@@ -17,6 +17,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_shopParams_general_general_enableDisableDisplayBrands';
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -36,7 +37,8 @@ describe('Enable display brands', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -104,7 +106,7 @@ describe('Enable display brands', async () => {
 
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', `goBackToBo_${test.args.action}`, baseContext);
-      page = await this.pageObjects.siteMapPage.closePage(browser, 0);
+      page = await this.pageObjects.siteMapPage.closePage(browserContext, 0);
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.brandsPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.brandsPage.pageTitle);

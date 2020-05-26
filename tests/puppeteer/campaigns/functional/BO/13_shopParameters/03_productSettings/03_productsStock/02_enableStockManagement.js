@@ -15,6 +15,7 @@ const ProductsPage = require('@pages/BO/catalog/products');
 const AddProductPage = require('@pages/BO/catalog/products/add');
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -33,7 +34,8 @@ describe('Enable stock management', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {

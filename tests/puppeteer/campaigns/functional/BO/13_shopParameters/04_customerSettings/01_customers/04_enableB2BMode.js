@@ -17,6 +17,7 @@ const LoginFOPage = require('@pages/FO/login');
 // Importing data
 
 let browser;
+let browserContext;
 let page;
 
 // Init objects needed
@@ -35,7 +36,8 @@ describe('Enable B2B mode', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -84,7 +86,7 @@ describe('Enable B2B mode', async () => {
       await this.pageObjects.loginFOPage.goToCreateAccountPage();
       const isCompanyInputVisible = await this.pageObjects.loginFOPage.isCompanyInputVisible();
       await expect(isCompanyInputVisible).to.be.equal(test.args.enable);
-      page = await this.pageObjects.loginFOPage.closePage(browser, 0);
+      page = await this.pageObjects.loginFOPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

@@ -31,6 +31,7 @@ const testContext = require('@utils/testContext');
 const baseContext = 'functional_BO_orders_invoices_invoiceOptions_otherOptions';
 
 let browser;
+let browserContext;
 let page;
 
 let invoiceData;
@@ -64,7 +65,8 @@ describe('Edit \'Invoice number, Footer text\' and check the generated invoice f
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     await helper.setDownloadBehavior(page);
 
     this.pageObjects = await init();
@@ -179,7 +181,7 @@ describe('Edit \'Invoice number, Footer text\' and check the generated invoice f
     it('should go back to BO', async function () {
       await testContext.addContextItem(this, 'testIdentifier', 'goBackToBo', baseContext);
 
-      page = await this.pageObjects.orderConfirmationPage.closePage(browser, 0);
+      page = await this.pageObjects.orderConfirmationPage.closePage(browserContext, 0);
       this.pageObjects = await init();
       const pageTitle = await this.pageObjects.invoicesPage.getPageTitle();
       await expect(pageTitle).to.contains(this.pageObjects.invoicesPage.pageTitle);

@@ -20,6 +20,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productData = new ProductFaker({type: 'Standard product', quantity: 0});
 
@@ -42,7 +43,8 @@ describe('Allow ordering of out-of-stock products', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -109,7 +111,7 @@ describe('Allow ordering of out-of-stock products', async () => {
       await this.pageObjects.searchResultsPage.goToProductPage(1);
       const lastQuantityIsVisible = await this.pageObjects.productPage.isAddToCartButtonEnabled();
       await expect(lastQuantityIsVisible).to.be.equal(test.args.enable);
-      page = await this.pageObjects.productPage.closePage(browser, 0);
+      page = await this.pageObjects.productPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

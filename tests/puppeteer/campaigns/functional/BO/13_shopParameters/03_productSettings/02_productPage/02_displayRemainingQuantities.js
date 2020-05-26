@@ -20,6 +20,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productData = new ProductFaker({type: 'Standard product', quantity: 2});
 const remainingQuantity = 0;
@@ -51,7 +52,8 @@ describe('Display remaining quantities', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -113,7 +115,7 @@ describe('Display remaining quantities', async () => {
       await this.pageObjects.searchResultsPage.goToProductPage(1);
       const lastQuantityIsVisible = await this.pageObjects.productPage.isAvailabilityQuantityDisplayed();
       await expect(lastQuantityIsVisible).to.be.equal(test.args.exist);
-      page = await this.pageObjects.productPage.closePage(browser, 0);
+      page = await this.pageObjects.productPage.closePage(browserContext, 0);
       this.pageObjects = await init();
     });
   });

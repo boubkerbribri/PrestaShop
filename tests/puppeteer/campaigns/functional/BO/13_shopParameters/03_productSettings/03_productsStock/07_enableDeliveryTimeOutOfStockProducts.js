@@ -20,6 +20,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 const ProductFaker = require('@data/faker/product');
 
 let browser;
+let browserContext;
 let page;
 const productData = new ProductFaker({type: 'Standard product', quantity: 0});
 
@@ -42,7 +43,8 @@ describe('Enable delivery time out-of-stocks products', async () => {
   // before and after functions
   before(async function () {
     browser = await helper.createBrowser();
-    page = await helper.newTab(browser);
+    browserContext = await helper.createBrowserContext(browser);
+    page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
@@ -125,7 +127,7 @@ describe('Enable delivery time out-of-stocks products', async () => {
 
         it('should go back to BO', async function () {
           await testContext.addContextItem(this, 'testIdentifier', `goBackToBo${index}`, baseContext);
-          page = await this.pageObjects.foProductPage.closePage(browser, 0);
+          page = await this.pageObjects.foProductPage.closePage(browserContext, 0);
           this.pageObjects = await init();
           const pageTitle = await this.pageObjects.productSettingsPage.getPageTitle();
           await expect(pageTitle).to.contains(this.pageObjects.productSettingsPage.pageTitle);
