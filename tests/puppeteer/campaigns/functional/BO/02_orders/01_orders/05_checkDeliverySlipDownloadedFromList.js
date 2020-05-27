@@ -27,7 +27,6 @@ const baseContext = 'functional_BO_orders_orders_checkDeliverySlipDownloadedFrom
 let browser;
 let browserContext;
 let page;
-let deliverySlipFilename;
 let filePath;
 
 // Init objects needed
