@@ -24,7 +24,9 @@ module.exports = class AddProduct extends BOBasePage {
     this.productOnlineSwitch = '.product-footer div.switch-input';
     this.productOnlineTitle = 'h2.for-switch.online-title';
     this.productShortDescriptionIframe = '#form_step1_description_short_1_ifr';
+    this.productShortDescriptionDiv = '#form_step1_description_short';
     this.productDescriptionIframe = '#form_step1_description_1_ifr';
+    this.productDescriptionDiv = '#form_step1_description';
     this.productTaxRuleSelect = '#step2_id_tax_rules_group_rendered';
     this.productDeleteLink = '.product-footer a.delete';
     this.dangerMessageShortDescription = '#form_step1_description_short .has-danger li';
@@ -58,6 +60,25 @@ module.exports = class AddProduct extends BOBasePage {
     this.friendlyUrlInput = '#form_step5_link_rewrite_1';
   }
 
+
+  /**
+   * @override
+   * Set value on tinyMce textarea
+   * @param selector
+   * @param value
+   * @return {Promise<void>}
+   */
+  async setValueOnTinymceInput(selector, value) {
+    // Select all
+    await this.page.click(`${selector} .mce-edit-area`, {clickCount: 3});
+
+    // Delete all text
+    await this.page.keyboard.press('Backspace');
+
+    // Fill the text
+    await this.page.keyboard.type(value);
+  }
+
   /**
    * Set Name, type of product, Reference, price ttc, description and short description
    * @param productData
@@ -65,8 +86,8 @@ module.exports = class AddProduct extends BOBasePage {
    */
   async setBasicSetting(productData) {
     await this.setValue(this.productNameInput, productData.name);
-    await this.setValueOnTinymceInput(this.productDescriptionIframe, productData.description);
-    await this.setValueOnTinymceInput(this.productShortDescriptionIframe, productData.summary);
+    await this.setValueOnTinymceInput(this.productDescriptionDiv, productData.description);
+    await this.setValueOnTinymceInput(this.productShortDescriptionDiv, productData.summary);
     await this.selectByVisibleText(this.productTypeSelect, productData.type);
     await this.setValue(this.productReferenceInput, productData.reference);
     if (await this.elementVisible(this.productQuantityInput, 500)) {
