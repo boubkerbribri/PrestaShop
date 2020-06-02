@@ -37,7 +37,6 @@ describe('Download import sample csv files', async () => {
     browser = await helper.createBrowser();
     browserContext = await helper.createBrowserContext(browser);
     page = await helper.newTab(browserContext);
-    await helper.setDownloadBehavior(page);
 
     this.pageObjects = await init();
   });
@@ -160,11 +159,6 @@ describe('Download import sample csv files', async () => {
         const textExist = await files.isTextInFile(filePath, sampleFile.args.textToCheck);
         await expect(textExist, `Text was not found in ${sampleFile.args.type} sample file`).to.be.true;
       });
-
-      // Delete file downloaded after checking it
-      after(
-        () => files.deleteFile(`${global.BO.DOWNLOAD_PATH}/${sampleFile.args.type}.csv`),
-      );
     });
   });
 });

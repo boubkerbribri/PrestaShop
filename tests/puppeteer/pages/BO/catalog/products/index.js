@@ -310,6 +310,7 @@ module.exports = class Product extends BOBasePage {
     // Choose category to filter with
     const args = {allCategoriesSelector: this.filterByCategoriesCategoryLabel, val: value};
     const found = await this.page.evaluate(async (args) => {
+      /* eslint-env browser */
       const allCategories = [...await document.querySelectorAll(args.allCategoriesSelector)];
       const category = await allCategories.find(el => el.textContent.includes(args.val));
       if (category === undefined) {
