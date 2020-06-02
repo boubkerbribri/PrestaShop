@@ -24,30 +24,59 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 
-namespace PrestaShop\PrestaShop\Core\Domain\Product\Exception;
+namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
 
 /**
- * Is thrown when product constraints are violated
+ * DTO for product that needs to be edited
  */
-class ProductConstraintException extends ProductException
+class EditableProduct
 {
     /**
-     * Code is used when invalid id is supplied.
+     * @var int
      */
-    const INVALID_ID = 10;
+    private $productId;
 
     /**
-     * When invalid product type is supplied.
+     * @var string[]
      */
-    const INVALID_PRODUCT_TYPE = 20;
+    private $localizedNames;
 
     /**
-     * When invalid product name in one or another language is supplied
+     * @var ProductType
      */
-    const INVALID_NAME = 30;
+    private $type;
+
+    public function __construct(
+        int $productId,
+        array $localizedNames,
+        ProductType $type
+    ) {
+        $this->productId = $productId;
+        $this->localizedNames = $localizedNames;
+        $this->type = $type;
+    }
 
     /**
-     * When invalid product condition is supplied
+     * @return int
      */
-    const INVALID_CONDITION = 40;
+    public function getProductId(): int
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getLocalizedNames(): array
+    {
+        return $this->localizedNames;
+    }
+
+    /**
+     * @return ProductType
+     */
+    public function getType(): ProductType
+    {
+        return $this->type;
+    }
 }
