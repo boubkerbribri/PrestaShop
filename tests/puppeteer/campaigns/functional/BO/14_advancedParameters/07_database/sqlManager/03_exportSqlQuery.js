@@ -26,11 +26,11 @@ const baseContext = 'functional_BO_advancedParams_database_exportSqlQuery';
 let browser;
 let browserContext;
 let page;
+let filePath;
 
 let numberOfSQLQueries = 0;
 
 const sqlQueryData = new SQLQueryFaker({tableName: 'ps_alias'});
-let fileName;
 const fileContent = `${Tables.ps_alias.columns[1]};${Tables.ps_alias.columns[2]};${Tables.ps_alias.columns[3]}`;
 
 // Init objects needed
@@ -57,7 +57,6 @@ describe('Export SQL query', async () => {
 
   after(async () => {
     await helper.closeBrowser(browser);
-    await files.deleteFile(`${global.BO.DOWNLOAD_PATH}/${fileName}`);
   });
 
   // Login into BO
@@ -108,9 +107,9 @@ describe('Export SQL query', async () => {
     it('should export sql query to a csv file', async function () {
       await testContext.addContextItem(this, 'testIdentifier', 'exportSqlQuery', baseContext);
 
-      await this.pageObjects.sqlManagerPage.exportSqlResultDataToCsv();
+      filePath = await this.pageObjects.sqlManagerPage.exportSqlResultDataToCsv();
 
-      const doesFileExist = await files.doesFileExist('request_', 5000, true, 'csv');
+      const doesFileExist = await files.doesFileExist(filePath, 5000);
       await expect(doesFileExist, 'Export of data has failed').to.be.true;
     });
 
@@ -119,10 +118,8 @@ describe('Export SQL query', async () => {
 
       const numberOfQuery = await this.pageObjects.sqlManagerPage.getNumberOfElementInGrid();
 
-      fileName = await files.getFileNameFromDir(global.BO.DOWNLOAD_PATH, 'request_', '.csv');
-
       for (let row = 1; row <= numberOfQuery; row++) {
-        const textExist = await files.isTextInFile(fileName, fileContent, true, true);
+        const textExist = await files.isTextInFile(filePath, fileContent, true, true);
         await expect(textExist, `${fileContent} was not found in the file`).to.be.true;
       }
     });

@@ -15,7 +15,8 @@ module.exports = class BOBasePage extends CommonPage {
 
     // top navbar
     this.headerLogoImage = '#header_logo';
-    this.userProfileIcon = '#employee_infos';
+    this.userProfileIconNonMigratedPages = '#employee_infos';
+    this.userProfileIcon = '#header_infos #header-employee-container';
     this.userProfileLogoutLink = 'a#header_logout';
     this.shopVersionBloc = '#shop_version';
     this.headerShopNameLink = '#header_shopname';
@@ -187,9 +188,8 @@ module.exports = class BOBasePage extends CommonPage {
    * @returns {Promise<void>}
    */
   async logoutBO() {
-    await this.clickAndWaitForNavigation(this.headerLogoImage);
-    await this.waitForVisibleSelector(this.userProfileIcon);
-    await this.page.click(this.userProfileIcon);
+    if (this.elementVisible(this.userProfileIcon, 1000)) await this.page.click(this.userProfileIcon);
+    else await this.page.$eval(this.userProfileIconNonMigratedPages, el => el.click());
     await this.waitForVisibleSelector(this.userProfileLogoutLink);
     await this.clickAndWaitForNavigation(this.userProfileLogoutLink);
   }
