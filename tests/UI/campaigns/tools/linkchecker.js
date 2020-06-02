@@ -106,11 +106,11 @@ describe('Crawl every page for defects and issues', async () => {
 
 /**
  * Crawl Page and write result
- * @param puppeteerPage
+ * @param browserPage
  * @param thisPageToCrawl
  * @return {Promise<void>}
  */
-async function crawlPage(puppeteerPage, thisPageToCrawl) {
+async function crawlPage(browserPage, thisPageToCrawl) {
   requestError = false;
   javascriptError = false;
 
@@ -122,10 +122,10 @@ async function crawlPage(puppeteerPage, thisPageToCrawl) {
     jsError: [],
   };
 
-  await puppeteerPage.goto(`${thisPageToCrawl.url}`, {waitUntil: 'networkidle0'});
+  await browserPage.goto(`${thisPageToCrawl.url}`, {waitUntil: 'networkidle0'});
 
   if (typeof (thisPageToCrawl.customAction) !== 'undefined') {
-    await thisPageToCrawl.customAction(puppeteerPage);
+    await thisPageToCrawl.customAction(browserPage);
   }
 
   output.pages.push(outputEntry);

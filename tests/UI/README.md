@@ -1,12 +1,12 @@
-# PrestaShop Tests with Puppeteer
+# PrestaShop UI Tests
 
 ## How to install your environment
 
 ```bash
 # Clone Prestashop
 git clone https://github.com/PrestaShop/PrestaShop/
-# Install dependencies in puppeteer folder
-cd tests/puppeteer/
+# Install dependencies in UI folder
+cd tests/UI/
 npm install
 ```
 
