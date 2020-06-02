@@ -27,10 +27,6 @@ let page;
 
 let numberOfFiles = 0;
 
-const firstFileData = new FileFaker();
-const secondFileData = new FileFaker();
-const thirdFileData = new FileFaker();
-
 // Init objects needed
 const init = async function () {
   return {
