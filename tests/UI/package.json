@@ -1,7 +1,7 @@
 {
-  "name": "puppeteer",
+  "name": "ui-tests",
   "version": "1.0.0",
-  "description": "Tests based on puppeteer",
+  "description": "User interface tests",
   "directories": {
     "test": "test"
   },
@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/PrestaShop/PrestaShop/issues"
   },
-  "homepage": "https://github.com/PrestaShop/PrestaShop/tree/develop/tests/puppeteer#readme",
+  "homepage": "https://github.com/PrestaShop/PrestaShop/tree/develop/tests/UI#readme",
   "dependencies": {
     "chai": "^4.2.0",
     "chai-string": "^1.5.0",

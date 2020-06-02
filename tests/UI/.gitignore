@@ -1,4 +1,4 @@
-### Node & Puppeteer specific rules ###
+### Ignored files in UI folder ###
 
 node_modules
 */node_modules
