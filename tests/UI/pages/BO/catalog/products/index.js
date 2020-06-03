@@ -305,24 +305,35 @@ module.exports = class Product extends BOBasePage {
     // Click and wait to be open
     await this.page.click(this.filterByCategoriesButton);
     await this.waitForVisibleSelector(`${this.filterByCategoriesButton}[aria-expanded='true']`);
+
     // Click on expand button
     await this.page.click(this.filterByCategoriesExpandButton);
+
     // Choose category to filter with
     const args = {allCategoriesSelector: this.filterByCategoriesCategoryLabel, val: value};
-    const found = await this.page.evaluate(async (args) => {
-      /* eslint-env browser */
-      const allCategories = [...await document.querySelectorAll(args.allCategoriesSelector)];
-      const category = await allCategories.find(el => el.textContent.includes(args.val));
-      if (category === undefined) {
-        return false;
-      }
-      await category.querySelector('input').click();
-      return true;
-    }, args);
+
+    const [found] = await Promise.all([
+      this.page.evaluate(
+        async (args) => {
+          /* eslint-env browser */
+          const allCategories = [...await document.querySelectorAll(args.allCategoriesSelector)];
+          const category = await allCategories.find(el => el.textContent.includes(args.val));
+
+          if (category === undefined) {
+            return false;
+          }
+
+          await category.querySelector('input').click();
+          return true;
+        }, args,
+      ),
+
+      this.page.waitForNavigation(),
+    ]);
+
     if (!found) {
       throw new Error(`${value} not found as a category`);
     }
-    await this.page.waitForNavigation();
   }
 
   /**
