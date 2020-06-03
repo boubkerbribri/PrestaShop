@@ -213,11 +213,14 @@ module.exports = class AddProduct extends BOBasePage {
    */
   async previewProduct() {
     await this.waitForVisibleSelector(this.previewProductLink);
-    this.page = await this.openLinkWithTargetBlank(this.page, this.previewProductLink);
+    this.page = await this.openLinkWithTargetBlank(this.previewProductLink);
+
+    // Click on product link if debug mode is activated
     const textBody = await this.getTextContent('body');
     if (await textBody.includes('[Debug] This page has moved')) {
       await this.clickAndWaitForNavigation('a');
     }
+
     return this.page;
   }
 
