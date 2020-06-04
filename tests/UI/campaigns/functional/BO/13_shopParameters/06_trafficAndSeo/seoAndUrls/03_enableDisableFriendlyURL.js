@@ -14,7 +14,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_shopParams_TrafficAndSeo_seoAndUrls_enableDisableFriendlyUrl';
 
-let browser;
+
 let browserContext;
 let page;
 

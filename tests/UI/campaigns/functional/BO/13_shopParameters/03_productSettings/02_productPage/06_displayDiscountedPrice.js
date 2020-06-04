@@ -19,7 +19,7 @@ const HomePage = require('@pages/FO/home');
 // Importing data
 const PriceRuleFaker = require('@data/faker/catalogPriceRule');
 
-let browser;
+
 let browserContext;
 let page;
 const priceRuleData = new PriceRuleFaker({

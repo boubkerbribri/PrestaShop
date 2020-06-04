@@ -21,7 +21,7 @@ const FOLoginPage = require('@pages/FO/login');
 const {DefaultAccount} = require('@data/demo/customer');
 const {DefaultFrTax} = require('@data/demo/tax');
 
-let browser;
+
 let browserContext;
 let page;
 

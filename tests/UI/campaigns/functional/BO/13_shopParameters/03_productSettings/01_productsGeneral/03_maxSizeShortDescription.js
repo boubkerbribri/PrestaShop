@@ -16,7 +16,7 @@ const AddProductPage = require('@pages/BO/catalog/products/add');
 // Importing data
 const ProductFaker = require('@data/faker/product');
 
-let browser;
+
 let browserContext;
 let page;
 const productData = new ProductFaker({type: 'Standard product', status: false});

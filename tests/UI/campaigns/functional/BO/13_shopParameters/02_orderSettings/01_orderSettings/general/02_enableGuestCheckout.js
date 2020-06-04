@@ -17,7 +17,7 @@ const HomePage = require('@pages/FO/home');
 const CartPage = require('@pages/FO/cart');
 const CheckoutPage = require('@pages/FO/checkout');
 
-let browser;
+
 let browserContext;
 let page;
 

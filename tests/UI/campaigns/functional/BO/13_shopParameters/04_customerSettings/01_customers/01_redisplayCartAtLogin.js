@@ -18,7 +18,7 @@ const LoginFOPage = require('@pages/FO/login');
 // Importing data
 const {DefaultAccount} = require('@data/demo/customer');
 
-let browser;
+
 let browserContext;
 let page;
 

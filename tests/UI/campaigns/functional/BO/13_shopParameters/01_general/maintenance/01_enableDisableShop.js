@@ -15,7 +15,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_shopParams_general_maintenance_enbaleDisableShop';
 
-let browser;
+
 let browserContext;
 let page;
 const newMaintenanceText = 'Maintenance';

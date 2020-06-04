@@ -13,7 +13,7 @@ const DashboardPage = require('@pages/BO/dashboard');
 const ProductSettingsPage = require('@pages/BO/shopParameters/productSettings');
 const HomePage = require('@pages/FO/home');
 
-let browser;
+
 let browserContext;
 let page;
 

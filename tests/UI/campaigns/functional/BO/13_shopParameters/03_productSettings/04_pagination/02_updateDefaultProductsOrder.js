@@ -14,7 +14,7 @@ const ProductSettingsPage = require('@pages/BO/shopParameters/productSettings');
 const HomePageFO = require('@pages/FO/home');
 const CategoryPageFO = require('@pages/FO/category');
 
-let browser;
+
 let browserContext;
 let page;
 

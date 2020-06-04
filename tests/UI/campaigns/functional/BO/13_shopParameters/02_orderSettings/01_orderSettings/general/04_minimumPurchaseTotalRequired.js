@@ -17,7 +17,7 @@ const FOBasePage = require('@pages/FO/FObasePage');
 const HomePage = require('@pages/FO/home');
 const CartPage = require('@pages/FO/cart');
 
-let browser;
+
 let browserContext;
 let page;
 const newPurchaseTotalRequired = 100;

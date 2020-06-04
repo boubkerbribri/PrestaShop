@@ -19,7 +19,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 // Importing data
 const ProductFaker = require('@data/faker/product');
 
-let browser;
+
 let browserContext;
 let page;
 const productData = new ProductFaker({

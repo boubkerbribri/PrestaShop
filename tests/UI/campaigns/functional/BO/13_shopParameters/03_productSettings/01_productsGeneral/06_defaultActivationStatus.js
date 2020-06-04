@@ -15,7 +15,7 @@ const ProductsPage = require('@pages/BO/catalog/products');
 const AddProductPage = require('@pages/BO/catalog/products/add');
 // Importing data
 
-let browser;
+
 let browserContext;
 let page;
 

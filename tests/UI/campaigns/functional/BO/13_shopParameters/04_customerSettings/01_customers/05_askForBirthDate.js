@@ -16,7 +16,7 @@ const FOBasePage = require('@pages/FO/FObasePage');
 const LoginFOPage = require('@pages/FO/login');
 // Importing data
 
-let browser;
+
 let browserContext;
 let page;
 

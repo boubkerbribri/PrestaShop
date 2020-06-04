@@ -19,7 +19,7 @@ const CustomersPage = require('@pages/BO/customers');
 // Importing data
 const CustomerFaker = require('@data/faker/customer');
 
-let browser;
+
 let browserContext;
 let page;
 const firstCustomerToCreate = new CustomerFaker();

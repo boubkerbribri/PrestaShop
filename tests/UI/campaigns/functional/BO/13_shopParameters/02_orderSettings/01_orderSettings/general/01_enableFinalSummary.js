@@ -20,7 +20,7 @@ const OrderConfirmationPage = require('@pages/FO/checkout/orderConfirmation');
 // Importing data
 const {DefaultAccount} = require('@data/demo/customer');
 
-let browser;
+
 let browserContext;
 let page;
 

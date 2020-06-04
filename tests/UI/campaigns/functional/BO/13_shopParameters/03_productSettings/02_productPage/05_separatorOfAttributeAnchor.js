@@ -17,7 +17,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 // Importing data
 const {Products} = require('@data/demo/products');
 
-let browser;
+
 let browserContext;
 let page;
 const productAttributes = ['1', 'size', 's/8', 'color', 'white'];

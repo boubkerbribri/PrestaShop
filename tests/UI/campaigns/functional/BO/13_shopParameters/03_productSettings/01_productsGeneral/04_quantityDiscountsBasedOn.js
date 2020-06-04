@@ -18,7 +18,7 @@ const CartPage = require('@pages/FO/cart');
 // Importing data
 const ProductFaker = require('@data/faker/product');
 
-let browser;
+
 let browserContext;
 let page;
 const productWithCombinations = new ProductFaker({

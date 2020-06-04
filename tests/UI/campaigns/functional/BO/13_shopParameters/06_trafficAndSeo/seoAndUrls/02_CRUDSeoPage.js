@@ -17,7 +17,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_shopParams_TrafficAndSeo_seoAndUrls_CRUDSeoPage';
 
-let browser;
+
 let browserContext;
 let page;
 const createSeoPageData = new SeoPageFaker(orderReturn);

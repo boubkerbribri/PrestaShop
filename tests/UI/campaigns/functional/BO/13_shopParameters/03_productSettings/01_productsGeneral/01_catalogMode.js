@@ -18,7 +18,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_shopParams_productSetting_catalogMode';
 
-let browser;
+
 let browserContext;
 let page;
 

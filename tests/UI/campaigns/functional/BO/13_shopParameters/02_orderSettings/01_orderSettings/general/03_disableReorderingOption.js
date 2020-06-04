@@ -18,7 +18,7 @@ const OrderHistoryPage = require('@pages/FO/myAccount/orderHistory');
 // Importing data
 const {DefaultAccount} = require('@data/demo/customer');
 
-let browser;
+
 let browserContext;
 let page;
 

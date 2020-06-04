@@ -19,7 +19,7 @@ const CheckoutPage = require('@pages/FO/checkout');
 // Importing data
 const {DefaultAccount} = require('@data/demo/customer');
 
-let browser;
+
 let browserContext;
 let page;
 
