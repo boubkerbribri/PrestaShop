@@ -23,7 +23,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_advancedParams_team_employees_CRUDEmployee';
 
-let browser;
+
 let browserContext;
 let page;
 let numberOfEmployees = 0;
@@ -65,8 +65,7 @@ const init = async function () {
 describe('Create, Read, Update and Delete Employee in BO', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
 
     // Init page objects
@@ -74,7 +73,7 @@ describe('Create, Read, Update and Delete Employee in BO', async () => {
   });
 
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login from BO and go to "Advanced parameters>Team" page

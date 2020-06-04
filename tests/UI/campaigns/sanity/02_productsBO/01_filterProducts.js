@@ -15,7 +15,7 @@ const {Products} = require('@data/demo/products');
 const {Categories} = require('@data/demo/categories');
 const {DefaultFrTax} = require('@data/demo/tax');
 
-let browser;
+
 let browserContext;
 let page;
 let numberOfProducts = 0;
@@ -33,13 +33,12 @@ const init = async function () {
 describe('Filter in Products Page', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
   // Steps
   loginCommon.loginBO();

@@ -127,9 +127,10 @@ module.exports = class CommonPage {
       this.page.click(selector),
     ]);
 
-    await newPage.waitForLoadState('load');
+    await newPage.waitForLoadState('networkidle');
 
-    await newPage.waitForSelector('body', {state: 'visible'});
+    await newPage.waitForSelector('body a', {state: 'visible'});
+    await newPage.screenshot({path: 'screenshot.png'});
     return newPage;
   }
 

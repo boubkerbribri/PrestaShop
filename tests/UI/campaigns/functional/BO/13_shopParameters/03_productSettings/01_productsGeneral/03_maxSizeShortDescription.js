@@ -16,7 +16,7 @@ const AddProductPage = require('@pages/BO/catalog/products/add');
 // Importing data
 const ProductFaker = require('@data/faker/product');
 
-let browser;
+
 let browserContext;
 let page;
 const productData = new ProductFaker({type: 'Standard product', status: false});
@@ -44,13 +44,12 @@ Check the validation message when the description is less than 800 characters
 describe('Update max size of short description', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO and go to product settings page

@@ -20,7 +20,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_design_pages_filterAndQuickEditCategories';
 
-let browser;
+
 let browserContext;
 let page;
 let numberOfCategories = 0;
@@ -42,15 +42,14 @@ const init = async function () {
 describe('Filter And Quick Edit Categories', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
 
     this.pageObjects = await init();
   });
 
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO

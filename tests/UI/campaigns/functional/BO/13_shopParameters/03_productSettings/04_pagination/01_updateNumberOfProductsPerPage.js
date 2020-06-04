@@ -14,7 +14,7 @@ const ProductSettingsPage = require('@pages/BO/shopParameters/productSettings');
 const HomePageFO = require('@pages/FO/home');
 const CategoryPageFO = require('@pages/FO/category');
 
-let browser;
+
 let browserContext;
 let page;
 const updatedProductPerPage = 5;
@@ -41,13 +41,12 @@ Check the update in FO
 describe('Update number of product displayed on FO', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO and go to product settings page

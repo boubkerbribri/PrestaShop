@@ -14,7 +14,7 @@ const OrdersPage = require('@pages/BO/orders');
 const {Orders} = require('@data/demo/orders');
 
 let numberOfOrders;
-let browser;
+
 let browserContext;
 let page;
 // creating pages objects in a function
@@ -33,13 +33,12 @@ Id, reference, new client, delivery, customer, total, payment and status
 describe('Filter the Orders table by ID, REFERENCE, STATUS', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await browser.close();
+    await helper.closeBrowserContext(browserContext);
   });
   // Steps
   loginCommon.loginBO();

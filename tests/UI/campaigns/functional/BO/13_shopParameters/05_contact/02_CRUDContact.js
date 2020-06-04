@@ -16,7 +16,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_shopParams_contact_CRUDContact';
 
-let browser;
+
 let browserContext;
 let page;
 let numberOfContacts = 0;
@@ -38,13 +38,12 @@ const init = async function () {
 describe('Create, Update and Delete contact in BO', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
   // Login into BO and go to contact page
   loginCommon.loginBO();

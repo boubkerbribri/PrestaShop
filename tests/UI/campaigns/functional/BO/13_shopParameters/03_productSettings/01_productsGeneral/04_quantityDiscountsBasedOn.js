@@ -18,7 +18,7 @@ const CartPage = require('@pages/FO/cart');
 // Importing data
 const ProductFaker = require('@data/faker/product');
 
-let browser;
+
 let browserContext;
 let page;
 const productWithCombinations = new ProductFaker({
@@ -66,13 +66,12 @@ Check the cart price TTC
 describe('Choose quantity discount based on', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO and go to product settings page

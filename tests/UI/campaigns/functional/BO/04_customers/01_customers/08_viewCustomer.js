@@ -35,7 +35,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_customers_customers_viewCustomer';
 
-let browser;
+
 let browserContext;
 let page;
 
@@ -90,15 +90,14 @@ const init = async function () {
 describe('View information about customer', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
 
     this.pageObjects = await init();
   });
 
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO

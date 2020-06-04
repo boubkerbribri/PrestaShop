@@ -19,7 +19,7 @@ const HomePage = require('@pages/FO/home');
 // Importing data
 const PriceRuleFaker = require('@data/faker/catalogPriceRule');
 
-let browser;
+
 let browserContext;
 let page;
 const priceRuleData = new PriceRuleFaker({
@@ -54,13 +54,12 @@ const init = async function () {
 describe('Enable/Disable display discounted price', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO and go to products page

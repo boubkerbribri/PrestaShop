@@ -19,7 +19,7 @@ const SearchResultsPage = require('@pages/FO/searchResults');
 // Importing data
 const ProductFaker = require('@data/faker/product');
 
-let browser;
+
 let browserContext;
 let page;
 const productData = new ProductFaker({
@@ -49,13 +49,12 @@ const init = async function () {
 describe('Display unavailable product attributes on the product page', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO and go to products page

@@ -19,7 +19,7 @@ const CheckoutPage = require('@pages/FO/checkout');
 // Importing data
 const {DefaultAccount} = require('@data/demo/customer');
 
-let browser;
+
 let browserContext;
 let page;
 
@@ -41,13 +41,12 @@ const init = async function () {
 describe('Enable terms of service', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
     this.pageObjects = await init();
   });
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
   // Login into BO and go to Shop Parameters > Order Settings page
   loginCommon.loginBO();

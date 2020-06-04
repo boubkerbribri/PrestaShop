@@ -19,7 +19,7 @@ const testContext = require('@utils/testContext');
 
 const baseContext = 'functional_BO_catalog_monitoring_sortDisabledProducts';
 
-let browser;
+
 let browserContext;
 let page;
 let numberOfProducts = 0;
@@ -46,15 +46,14 @@ Sort list of disabled products in monitoring page
 describe('Sort list of disabled products', async () => {
   // before and after functions
   before(async function () {
-    browser = await helper.createBrowser();
-    browserContext = await helper.createBrowserContext(browser);
+    browserContext = await helper.createBrowserContext(this.browser);
     page = await helper.newTab(browserContext);
 
     this.pageObjects = await init();
   });
 
   after(async () => {
-    await helper.closeBrowser(browser);
+    await helper.closeBrowserContext(browserContext);
   });
 
   // Login into BO
