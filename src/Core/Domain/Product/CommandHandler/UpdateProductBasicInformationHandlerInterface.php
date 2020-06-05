@@ -24,17 +24,17 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 
-namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryHandler;
+namespace PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler;
 
-use PrestaShop\PrestaShop\Core\Domain\Product\Query\GetEditableProduct;
-use PrestaShop\PrestaShop\Core\Domain\Product\QueryResult\EditableProduct;
+use PrestaShop\PrestaShop\Core\Domain\Product\Command\UpdateProductBasicInformationCommand;
 
-interface GetEditableProductHandlerInterface
+/**
+ * Defines contract for UpdateProductBasicInformationHandler
+ */
+interface UpdateProductBasicInformationHandlerInterface
 {
     /**
-     * @param GetEditableProduct $query
-     *
-     * @return EditableProduct
+     * @param UpdateProductBasicInformationCommand $command
      */
-    public function handle(GetEditableProduct $query): EditableProduct;
+    public function handle(UpdateProductBasicInformationCommand $command): void;
 }

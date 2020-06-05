@@ -31,14 +31,16 @@ use Cache;
 use Context;
 use Language;
 use PrestaShop\PrestaShop\Core\Domain\Product\Command\AddProductCommand;
+use PrestaShop\PrestaShop\Core\Domain\Product\Command\UpdateProductBasicInformationCommand;
 use PrestaShop\PrestaShop\Core\Domain\Product\Exception\ProductConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Product\Exception\ProductException;
-use PrestaShop\PrestaShop\Core\Domain\Product\Query\GetEditableProduct;
+use PrestaShop\PrestaShop\Core\Domain\Product\Query\GetProductForEditing;
 use PrestaShop\PrestaShop\Core\Domain\Product\Query\SearchProducts;
-use PrestaShop\PrestaShop\Core\Domain\Product\QueryResult\EditableProduct;
 use PrestaShop\PrestaShop\Core\Domain\Product\QueryResult\FoundProduct;
+use PrestaShop\PrestaShop\Core\Domain\Product\QueryResult\ProductForEditing;
 use Product;
 use RuntimeException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Tests\Integration\Behaviour\Features\Context\SharedStorage;
 use Tests\Integration\Behaviour\Features\Context\Util\PrimitiveUtils;
 
@@ -64,7 +66,7 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @When I add product :productReference with following basic information:
+     * @When I add product :productReference with following information:
      *
      * @param string $productReference
      * @param TableNode $table
@@ -86,7 +88,43 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
+     * @When I update product :productReference basic information with following values:
+     *
+     * @param string $productReference
+     * @param TableNode $table
+     */
+    public function updateProductBasicInfo(string $productReference, TableNode $table): void
+    {
+        $data = $table->getRowsHash();
+        $productId = $this->getSharedStorage()->get($productReference);
+        $command = new UpdateProductBasicInformationCommand($productId);
+
+        if (isset($data['name'])) {
+            $command->setLocalizedNames($this->parseLocalizedArray($data['name']));
+        }
+
+        if (isset($data['is_virtual'])) {
+            $command->setVirtual(PrimitiveUtils::castStringBooleanIntoBoolean($data['is_virtual']));
+        }
+
+        if (isset($data['description'])) {
+            $command->setLocalizedDescriptions($this->parseLocalizedArray($data['description']));
+        }
+
+        if (isset($data['description_short'])) {
+            $command->setLocalizedShortDescriptions($this->parseLocalizedArray($data['description_short']));
+        }
+
+        try {
+            $this->getCommandBus()->handle($command);
+        } catch (ProductException $e) {
+            $this->lastException = $e;
+        }
+    }
+
+    /**
      * @Then /^product "(.+)" localized "(.+)" should be "(.+)"$/
+     * @Given /^product "(.+)" localized "(.+)" is "(.+)"$/
      *
      * @param string $productReference
      * @param string $fieldName
@@ -94,11 +132,13 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
      */
     public function assertLocalizedProperty(string $productReference, string $fieldName, string $localizedValues)
     {
-        $product = $this->getProductByReference($productReference);
+        $productForEditing = $this->getProductForEditing($productReference);
         $expectedLocalizedValues = $this->parseLocalizedArray($localizedValues);
 
-        foreach ($expectedLocalizedValues as $langId => $value) {
-            if ($value !== $product->{$fieldName}[$langId]) {
+        foreach ($expectedLocalizedValues as $langId => $expectedValue) {
+            $actualValue = $this->extractValueFromProductForEditing($productForEditing, $fieldName)[$langId];
+
+            if ($expectedValue !== $actualValue) {
                 $langIso = Language::getIsoById($langId);
 
                 throw new RuntimeException(
@@ -106,8 +146,8 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
                         'Expected %s in "%s" language was "%s", but got "%s"',
                         $fieldName,
                         $langIso,
-                        $value,
-                        $product->{$fieldName}[$langId]
+                        $expectedValue,
+                        $actualValue
                     )
                 );
             }
@@ -122,26 +162,15 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
      */
     public function assertProductFields(string $productReference, TableNode $table)
     {
-        $product = $this->getProductByReference($productReference);
+        $productForEditing = $this->getProductForEditing($productReference);
         $data = $table->getRowsHash();
 
         if (!empty($data['active'])) {
             $status = PrimitiveUtils::castStringBooleanIntoBoolean($data['active']);
             $statusInWords = $status ? 'enabled' : 'disabled';
 
-            if ((bool) $product->active !== $status) {
+            if ((bool) $productForEditing->isActive() !== $status) {
                 throw new RuntimeException(sprintf('Product expected to be %s', $statusInWords));
-            }
-        }
-
-        if (!empty($data['condition'])) {
-            if ($product->condition !== $data['condition']) {
-                throw new RuntimeException(sprintf(
-                    'Product condition expected to be "%s, but is "%s"',
-                    $data['condition'],
-                        $product->condition
-                    )
-                );
             }
         }
     }
@@ -155,19 +184,20 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     {
         $context = $this->getContainer()->get('prestashop.adapter.legacy.context')->getContext();
         $defaultCategoryId = (int) $context->shop->id_category;
-        $product = $this->getProductByReference($productReference);
-        $productCategories = $product->getCategories();
+
+        $productForEditing = $this->getProductForEditing($productReference);
+        $productCategoriesInfo = $productForEditing->getCategoriesInformation();
 
         $belongsToDefaultCategory = false;
-        foreach ($productCategories as $categoryId) {
-            if ((int) $categoryId === $defaultCategoryId) {
+        foreach ($productCategoriesInfo->getCategoryIds() as $categoryId) {
+            if ($categoryId === $defaultCategoryId) {
                 $belongsToDefaultCategory = true;
 
                 break;
             }
         }
 
-        if ((int) $product->id_category_default !== $defaultCategoryId || !$belongsToDefaultCategory) {
+        if ($productCategoriesInfo->getDefaultCategoryId() !== $defaultCategoryId || !$belongsToDefaultCategory) {
             throw new RuntimeException('Default category is not assigned to product');
         }
     }
@@ -180,13 +210,13 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
      */
     public function assertProductType(string $productReference, string $productTypeName)
     {
-        $editableProduct = $this->getEditableProductByReference($productReference);
-        if ($productTypeName !== $editableProduct->getType()->getValue()) {
+        $editableProduct = $this->getProductForEditing($productReference);
+        if ($productTypeName !== $editableProduct->getBasicInformation()->getType()->getValue()) {
             throw new RuntimeException(
                 sprintf(
                     'Product type is not as expected. Expected %s but go %s instead',
                     $productTypeName,
-                    $editableProduct->getType()->getValue()
+                    $editableProduct->getBasicInformation()->getType()->getValue()
                 )
             );
         }
@@ -215,6 +245,49 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
+     * @Then I should get error that product description is invalid
+     */
+    public function assertLastErrorIsInvalidDescriptionConstraint()
+    {
+        $this->assertLastErrorIs(
+            ProductConstraintException::class,
+            ProductConstraintException::INVALID_DESCRIPTION
+        );
+    }
+
+    /**
+     * @Then I should get error that product short description is invalid
+     */
+    public function assertLastErrorIsInvalidShortDescriptionConstraint()
+    {
+        $this->assertLastErrorIs(
+            ProductConstraintException::class,
+            ProductConstraintException::INVALID_SHORT_DESCRIPTION
+        );
+    }
+
+    /**
+     * Extracts corresponding field value from ProductForEditing DTO
+     *
+     * @param ProductForEditing $productForEditing
+     * @param string $propertyName
+     *
+     * @return mixed
+     */
+    private function extractValueFromProductForEditing(ProductForEditing $productForEditing, string $propertyName)
+    {
+        $pathsByNames = [
+            'name' => 'basicInformation.localizedNames',
+            'description' => 'basicInformation.localizedDescriptions',
+            'description_short' => 'basicInformation.localizedShortDescriptions',
+        ];
+
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+
+        return $propertyAccessor->getValue($productForEditing, $pathsByNames[$propertyName]);
+    }
+
+    /**
      * @param string $productName
      *
      * @return int
@@ -237,42 +310,14 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     /**
      * @param string $reference
      *
-     * @return Product
+     * @return ProductForEditing
      */
-    private function getProductByReference(string $reference): Product
+    private function getProductForEditing(string $reference): ProductForEditing
     {
         $productId = $this->getSharedStorage()->get($reference);
 
-        return $this->getProductById($productId);
-    }
-
-    /**
-     * @param string $reference
-     *
-     * @return EditableProduct
-     */
-    private function getEditableProductByReference(string $reference): EditableProduct
-    {
-        $productId = $this->getSharedStorage()->get($reference);
-
-        return $this->getQueryBus()->handle(new GetEditableProduct(
+        return $this->getQueryBus()->handle(new GetProductForEditing(
             $productId
         ));
-    }
-
-    /**
-     * @param int $productId
-     *
-     * @return Product
-     */
-    private function getProductById(int $productId): Product
-    {
-        $product = new Product($productId);
-
-        if (!$product->id) {
-            throw new RuntimeException('Product with id "%s" was not found');
-        }
-
-        return $product;
     }
 }

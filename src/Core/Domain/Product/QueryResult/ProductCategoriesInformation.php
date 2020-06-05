@@ -24,35 +24,48 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 
-namespace PrestaShop\PrestaShop\Core\Domain\Product\Query;
+declare(strict_types=1);
 
-use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
+namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
 
 /**
- * Get Product data necessary for edition
+ * Contains information about product categories
  */
-class GetEditableProduct
+class ProductCategoriesInformation
 {
     /**
-     * @var ProductId
+     * @var int[]
      */
-    private $productId;
+    private $categoryIds;
 
     /**
-     * GetEditableProduct constructor.
-     *
-     * @param int $productId
+     * @var int
      */
-    public function __construct(int $productId)
+    private $defaultCategoryId;
+
+    /**
+     * @param int[] $categoryIds
+     * @param int $defaultCategoryId
+     */
+    public function __construct(array $categoryIds, int $defaultCategoryId)
     {
-        $this->productId = new ProductId($productId);
+        $this->categoryIds = $categoryIds;
+        $this->defaultCategoryId = $defaultCategoryId;
     }
 
     /**
-     * @return ProductId
+     * @return int[]
      */
-    public function getProductId(): ProductId
+    public function getCategoryIds(): array
     {
-        return $this->productId;
+        return $this->categoryIds;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultCategoryId(): int
+    {
+        return $this->defaultCategoryId;
     }
 }
