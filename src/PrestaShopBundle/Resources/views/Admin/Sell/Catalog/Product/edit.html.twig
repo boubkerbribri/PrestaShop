@@ -1,5 +1,4 @@
-<?php
-/**
+{#**
  * 2007-2020 PrestaShop SA and Contributors
  *
  * NOTICE OF LICENSE
@@ -22,42 +21,29 @@
  * @copyright 2007-2020 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
- */
+ *#}
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
 
-namespace PrestaShop\PrestaShop\Core\Domain\Product\Exception;
+{% form_theme productPriceForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
 
-/**
- * Is thrown when product constraints are violated
- */
-class ProductConstraintException extends ProductException
-{
-    /**
-     * Code is used when invalid id is supplied.
-     */
-    const INVALID_ID = 10;
+{# @todo: starter for product page. Feel free to move/modify while appending more fields to form #}
+{% block content %}
+  {% block product_price_form %}
+    {{ form_start(productPriceForm) }}
+    <div class="card">
+      <div class="card-block row">
+        <div class="card-text">
+          {{ form_widget(productPriceForm) }}
+        </div>
+      </div>
+    </div>
+    {{ form_end(productPriceForm) }}
+  {% endblock %}
+{% endblock %}
 
-    /**
-     * When invalid product type is supplied.
-     */
-    const INVALID_PRODUCT_TYPE = 20;
+{% block javascripts %}
+  {{ parent() }}
 
-    /**
-     * When invalid product name in one or another language is supplied
-     */
-    const INVALID_NAME = 30;
-
-    /**
-     * When invalid product condition is supplied
-     */
-    const INVALID_CONDITION = 40;
-
-    /**
-     * When invalid product description is supplied
-     */
-    const INVALID_DESCRIPTION = 50;
-
-    /**
-     * When invalid product short description is supplied
-     */
-    const INVALID_SHORT_DESCRIPTION = 60;
-}
+  {# To uncomment when javascript is integrated #}
+  {# <script src="{{ asset('themes/new-theme/public/product_edit.bundle.js') }}"></script> #}
+{% endblock %}

@@ -24,40 +24,35 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 
-namespace PrestaShop\PrestaShop\Core\Domain\Product\Exception;
+namespace PrestaShop\PrestaShop\Core\Domain\Product\Query;
+
+use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 
 /**
- * Is thrown when product constraints are violated
+ * Get Product data necessary for editing
  */
-class ProductConstraintException extends ProductException
+class GetProductForEditing
 {
     /**
-     * Code is used when invalid id is supplied.
+     * @var ProductId
      */
-    const INVALID_ID = 10;
+    private $productId;
 
     /**
-     * When invalid product type is supplied.
+     * GetEditableProduct constructor.
+     *
+     * @param int $productId
      */
-    const INVALID_PRODUCT_TYPE = 20;
+    public function __construct(int $productId)
+    {
+        $this->productId = new ProductId($productId);
+    }
 
     /**
-     * When invalid product name in one or another language is supplied
+     * @return ProductId
      */
-    const INVALID_NAME = 30;
-
-    /**
-     * When invalid product condition is supplied
-     */
-    const INVALID_CONDITION = 40;
-
-    /**
-     * When invalid product description is supplied
-     */
-    const INVALID_DESCRIPTION = 50;
-
-    /**
-     * When invalid product short description is supplied
-     */
-    const INVALID_SHORT_DESCRIPTION = 60;
+    public function getProductId(): ProductId
+    {
+        return $this->productId;
+    }
 }
