@@ -117,7 +117,7 @@ module.exports = {
       if (isDeleted) {
         test('should click on "Dropdown" button', () => client.waitForExistAndClick(CustomerServicePage.dropdown_button));
         test('should click on "Delete" action', () => client.waitForExistAndClick(CustomerServicePage.delete_button));
-        test('should accept the confirmation alert', () => client.alertAccept());
+        test('should accept the confirmation alert', () => client.waitForExistAndClick('//*[@id="popup_ok"]'));
         test('should verify the appearance of the green validation', () => client.checkTextValue(CustomerServicePage.success_panel, '×\nSuccessful deletion.'));
       } else {
         test('should click on "View" button', () => client.waitForExistAndClick(CustomerServicePage.view_button));

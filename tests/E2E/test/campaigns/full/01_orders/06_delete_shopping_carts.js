@@ -51,7 +51,7 @@ scenario('Delete shopping carts', () => {
     test('should get the "ID" of the last shopping cart', () => client.getTextInVar(ShoppingCart.id.replace('%NUMBER', 1).replace('%COL', 2), "idShoppingCart"));
     test('should click on "Dropdown" button', () => client.waitForExistAndClick(OrderPage.dropdown_button));
     test('should click on "Delete" action', () => client.waitForExistAndClick(OrderPage.delete_button));
-    test('should accept the confirmation alert', () => client.alertAccept());
+    test('should accept the confirmation alert', () => client.waitForExistAndClick('//*[@id="popup_ok"]'));
     test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful deletion.'));
     test('should check that this shopping carts does not appears in the list', () => {
       return promise
