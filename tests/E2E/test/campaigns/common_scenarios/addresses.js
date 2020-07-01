@@ -150,7 +150,7 @@ module.exports = {
           .then(() => client.waitForExistAndClick(Addresses.dropdown_toggle))
           .then(() => client.waitForExistAndClick(Addresses.delete_button));
       });
-      test('should accept the currently displayed alert dialog', () => client.alertAccept());
+      test('should accept the currently displayed alert dialog', () => client.waitForExistAndClick('//*[@id="popup_ok"]'));
       test('should verify the appearance of the green validation', () => client.checkTextValue(BO.success_panel, '×\nSuccessful deletion.'));
     }, 'customer');
   },

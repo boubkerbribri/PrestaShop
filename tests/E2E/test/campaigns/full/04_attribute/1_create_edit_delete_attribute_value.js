@@ -141,7 +141,7 @@ scenario('Delete "Attribute" with bulk actions', () => {
   welcomeScenarios.findAndCloseWelcomeModal();
   commonAttribute.createAttribute(attributeData);
   commonScenarios.createProduct(AddProductPage, productData);
-  commonAttribute.attributeBulkActions(attributeData, 'delete');
+  commonAttribute.attributeBulkActions(attributeData, 'bulk delete');
 
   scenario('Logout from the Back Office', client => {
     test('should logout successfully from the Back Office', () => client.signOutBO());

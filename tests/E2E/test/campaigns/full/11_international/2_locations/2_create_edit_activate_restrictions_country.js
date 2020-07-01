@@ -316,7 +316,7 @@ scenario('Create, edit a country and activate country restrictions in the Back O
     test('should set the "ISO code" search input to "COR"', () => client.waitAndSetValue(Location.Country.search_iso_code_input, 'COR'));
     test('should click on "Search" button', () => client.waitForExistAndClick(Location.Country.search_button));
     test('should click on "Select all" action from the "Bulk action" list', () => client.clickOnAction(Location.Country.action_group_button.replace("%ID", 1), Location.Country.bulk_action_button, "selectAll"));
-    test('should click on "Delete selected" action from the "Bulk action" list', () => client.clickOnAction(Location.Country.action_group_button.replace("%ID", 5), Location.Country.bulk_action_button, "delete"));
+    test('should click on "Delete selected" action from the "Bulk action" list', () => client.clickOnAction(Location.Country.action_group_button.replace("%ID", 5), Location.Country.bulk_action_button, "bulk delete"));
     test('should verify the appearance of the green validation', () => client.checkTextValue(Location.Country.alert_panel.replace("%B", "success"), "×\nThe selection has been successfully deleted."));
     test('should click on "Reset" button', () => client.waitForExistAndClick(Location.Country.reset_button));
     test('should change "Restrict country selections in front office to those covered by active carriers" button on "No"', () => client.waitForExistAndClick(Location.Country.restrict_country_selections_button.replace('%B', 'off')));

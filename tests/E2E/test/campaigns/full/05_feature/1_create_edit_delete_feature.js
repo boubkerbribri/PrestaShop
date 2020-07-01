@@ -133,7 +133,7 @@ scenario('Delete "Feature" with bulk actions', () => {
   welcomeScenarios.findAndCloseWelcomeModal();
   commonFeature.createFeature(featureData);
   commonProduct.createProduct(AddProductPage, productData);
-  commonFeature.featureBulkActions(featureData, 'delete');
+  commonFeature.featureBulkActions(featureData, 'bulk delete');
 
   scenario('Logout from the Back Office', client => {
     test('should logout successfully from the Back Office', () => client.signOutBO());

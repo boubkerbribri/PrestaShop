@@ -84,7 +84,7 @@ module.exports = {
       test('should click on "delete" btn', () => {
         return promise
           .then(() => client.waitForVisibleAndClick(FeatureSubMenu.delete_button))
-          .then(() => client.alertAccept());
+          .then(() => client.waitForVisibleAndClick('//*[@id="popup_ok"]'));
       });
       test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nSuccessful deletion.'));
     }, 'attribute_and_feature');
@@ -120,7 +120,7 @@ module.exports = {
       test('should click on "Feature" subtab', () => client.waitForExistAndClick(Menu.Sell.Catalog.feature_tab));
       test('should search for the created feature', () => client.searchByValue(FeatureSubMenu.search_input.replace('%SEARCHBY', 'b!name'), FeatureSubMenu.search_button, data.name + date_time));
       test('should click on checkbox option', () => client.waitForExistAndClick(FeatureSubMenu.feature_checkbox));
-      test('should ' + action + ' the created feature', () => client.clickOnAction(FeatureSubMenu.feature_bulk_actions, FeatureSubMenu.feature_delete_bulk_action, 'delete'));
+      test('should ' + action + ' the created feature', () => client.clickOnAction(FeatureSubMenu.feature_bulk_actions, FeatureSubMenu.feature_delete_bulk_action, 'bulk delete'));
       test('should verify the appearance of the green validation', () => client.checkTextValue(CatalogPage.success_panel, '×\nThe selection has been successfully deleted.'));
     }, 'attribute_and_feature');
   },

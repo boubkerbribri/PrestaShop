@@ -54,7 +54,7 @@ module.exports = {
         return promise
           .then(() => client.waitForExistAndClick(Taxes.taxRules.dropdown_button))
           .then(() => client.waitForExistAndClick(Taxes.taxRules.delete_button))
-          .then(() => client.alertAccept());
+          .then(() => client.waitForExistAndClick('//*[@id="popup_ok"]'));
       });
       test('should verify the appearance of the green validation', () => client.checkTextValue(InternationalPage.success_panel, '×\nSuccessful deletion.'));
     }, 'common_client');

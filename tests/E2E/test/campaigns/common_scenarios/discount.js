@@ -30,7 +30,7 @@ module.exports = {
           .then(() => client.waitForExistAndClick(DiscountSubMenu.catalogPriceRules.dropdown_button))
           .then(() => client.waitForExistAndClick(DiscountSubMenu.catalogPriceRules.delete_button));
       });
-      test('should accept the confirmation alert', () => client.alertAccept());
+      test('should accept the confirmation alert', () => client.waitForExistAndClick('//*[@id="popup_ok"]'));
       test('should check the success message appear', () => client.checkTextValue(DiscountSubMenu.catalogPriceRules.success_delete_message, 'Successful deletion.', "contain"));
     }, 'discount');
   },
@@ -112,7 +112,7 @@ module.exports = {
       });
       test('should click on "Dropdown toggle" button', () => client.waitForExistAndClick(DiscountSubMenu.cartRules.dropdown_button));
       test('should click on "Delete" button', () => client.waitForExistAndClick(DiscountSubMenu.cartRules.delete_button));
-      test('should accept the confirmation alert', () => client.alertAccept());
+      test('should accept the confirmation alert', () => client.waitForExistAndClick('//*[@id="popup_ok"]'));
       test('should verify the appearance of the green validation', () => client.checkTextValue(DiscountSubMenu.cartRules.success_delete_message, '×\nSuccessful deletion.'));
     }, 'discount');
   }

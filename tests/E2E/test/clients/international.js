@@ -23,6 +23,11 @@ class International extends CommonClient {
       return this.client
         .waitForExistAndClick(groupActionSelector)
         .waitForExistAndClick(actionSelector)
+        .waitForExistAndClick('//*[@id="popup_ok"]');
+    } else if (action === 'bulk delete') {
+      return this.client
+        .waitForExistAndClick(groupActionSelector)
+        .waitForExistAndClick(actionSelector)
         .alertAccept();
     }
     else {

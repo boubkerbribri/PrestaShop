@@ -33,7 +33,7 @@ global.rcLink = argv.RCLINK || ''; // Link for download The RC
 global.rcTarget = argv.RCTARGET; // Last stable version location directory
 global.filename = argv.FILENAME || ''; // RC file name
 
-global.headless = argv.HEADLESS || false;
+global.headless = argv.HEADLESS || true;
 
 global.adminEmail = argv.ADMIN_EMAIL || 'demo@prestashop.com';
 global.adminPassword = argv.ADMIN_PASSWORD || 'prestashop_demo';

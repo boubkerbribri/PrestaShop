@@ -143,7 +143,7 @@ scenario('Add, edit, delete and bulk actions "Zone" in the Back Office', () => {
         .then(() => client.waitForExist(Location.Zone.search_by_zone_icon.replace('%B', 'Africa').replace('%ICON', 'icon-check')))
         .then(() => client.waitForExist(Location.Zone.search_by_zone_icon.replace('%B', 'Oceania').replace('%ICON', 'icon-check')));
     });
-    test('should click on "Delete selected" action from the "Bulk action" list', () => client.clickOnAction(Location.Zone.action_group_button.replace('%ID', 5), Location.Zone.bulk_action_button, 'delete'));
+    test('should click on "Delete selected" action from the "Bulk action" list', () => client.clickOnAction(Location.Zone.action_group_button.replace('%ID', 5), Location.Zone.bulk_action_button, 'bulk delete'));
     test('should verify the appearance of the green validation', () => client.checkTextValue(Location.Zone.alert_panel.replace('%I', 'success'), '×\nThe selection has been successfully deleted.'));
     test('should verify that "Africa" & "Oceania" zones are not in the list', () => {
       return promise

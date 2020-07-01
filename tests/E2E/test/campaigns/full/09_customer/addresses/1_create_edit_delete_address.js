@@ -125,7 +125,7 @@ scenario('Edit, delete and delete with bulk actions "Address"', () => {
       return promise
         .then(() => client.waitForVisibleAndClick(Addresses.dropdown_toggle))
         .then(() => client.waitForVisibleAndClick(Addresses.delete_button))
-        .then(() => client.alertAccept());
+        .then(() => client.waitForVisibleAndClick('//*[@id="popup_ok"]'));
     });
     test('should get the address ID', () => client.getTextInVar(Addresses.address_id, 'address_id'));
   }, 'customer');
