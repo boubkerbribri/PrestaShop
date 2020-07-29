@@ -52,7 +52,7 @@ module.exports = class Order extends BOBasePage {
     await this.setValue(this.editProductQuantityInput, quantity.toString());
     await Promise.all([
       this.page.click(this.UpdateProductButton),
-      this.waitForVisibleSelector(this.editProductQuantityInput),
+      this.page.waitForSelector(this.editProductQuantityInput, {state: 'hidden'}),
     ]);
     return parseFloat(await this.getTextContent(this.productQuantitySpan(row)));
   }
