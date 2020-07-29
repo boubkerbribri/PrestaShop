@@ -58,7 +58,7 @@ class Order extends BOBasePage {
         page.waitForSelector(this.editProductQuantityInput, {state: 'hidden'}),
       ]);
     } catch(e) {
-      await page.screenshot({path: '/tmp//screen.png'});
+      await page.screenshot({path: '/tmp/screen.png'});
       throw new Error(e);
     }
     return parseFloat(await this.getTextContent(page, this.productQuantitySpan(row)));
