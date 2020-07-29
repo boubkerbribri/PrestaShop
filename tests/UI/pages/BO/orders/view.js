@@ -51,6 +51,9 @@ class Order extends BOBasePage {
       this.waitForVisibleSelector(page, this.editProductQuantityInput),
     ]);
     await this.setValue(page, this.editProductQuantityInput, quantity.toString());
+
+    const qt = await page.$eval(this.editProductQuantityInput, el => el.value);
+    console.log(qt);
     await Promise.all([
       page.click(`${this.updateProductButton}:not([disabled])`),
       page.waitForSelector(this.editProductQuantityInput, {state: 'hidden'}),
