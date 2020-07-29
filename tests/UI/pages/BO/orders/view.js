@@ -52,12 +52,15 @@ class Order extends BOBasePage {
     ]);
     await this.setValue(page, this.editProductQuantityInput, quantity.toString());
 
-    const qt = await page.$eval(this.editProductQuantityInput, el => el.value);
-    console.log(qt);
-    await Promise.all([
-      page.click(`${this.updateProductButton}:not([disabled])`),
-      page.waitForSelector(this.editProductQuantityInput, {state: 'hidden'}),
-    ]);
+    try {
+      await Promise.all([
+        page.click(`${this.updateProductButton}:not([disabled])`),
+        page.waitForSelector(this.editProductQuantityInput, {state: 'hidden'}),
+      ]);
+    } catch(e) {
+      await page.screenshot({path: '/tmp//screen.png'});
+      throw new Error(e);
+    }
     return parseFloat(await this.getTextContent(page, this.productQuantitySpan(row)));
   }
 

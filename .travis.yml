@@ -4,6 +4,10 @@ services:
   - mysql
 
 addons:
+  addons:
+    artifacts:
+      paths:
+        - $(ls /tmp/*.png | tr "\n" ":")
   chrome: stable
   apt:
     packages:
