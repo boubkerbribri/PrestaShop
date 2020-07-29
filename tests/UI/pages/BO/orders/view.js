@@ -15,7 +15,7 @@ module.exports = class Order extends BOBasePage {
     this.productQuantitySpan = row => `${this.orderProductsRowTable(row)} td.cellProductQuantity span`;
     this.orderProductsEditRowTable = `${this.orderProductsTable} tbody tr.editProductRow`;
     this.editProductQuantityInput = `${this.orderProductsEditRowTable} input#edit_product_row_quantity`;
-    this.UpdateProductButton = `${this.orderProductsEditRowTable} button#edit_product_row_save`;
+    this.updateProductButton = `${this.orderProductsEditRowTable} button#edit_product_row_save`;
     this.partialRefundButton = 'button.partial-refund-display';
     // Status tab
     this.orderStatusesSelect = '#update_order_status_action_input';
@@ -51,7 +51,7 @@ module.exports = class Order extends BOBasePage {
     ]);
     await this.setValue(this.editProductQuantityInput, quantity.toString());
     await Promise.all([
-      this.page.click(this.UpdateProductButton),
+      this.page.click(`${this.updateProductButton}:not([disabled])`),
       this.page.waitForSelector(this.editProductQuantityInput, {state: 'hidden'}),
     ]);
     return parseFloat(await this.getTextContent(this.productQuantitySpan(row)));
