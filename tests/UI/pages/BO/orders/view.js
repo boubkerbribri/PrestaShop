@@ -50,10 +50,15 @@ module.exports = class Order extends BOBasePage {
       this.waitForVisibleSelector(this.editProductQuantityInput),
     ]);
     await this.setValue(this.editProductQuantityInput, quantity.toString());
+    const quantityAvant = await this.page.$eval(this.editProductQuantityInput, el => el.value);
+    console.log(quantityAvant)
     await this.page.click(this.UpdateProductButton);
     await this.page.waitForTimeout(2000);
 
-    await console.log(await this.page.content());
+    const quantityApres = await this.page.$eval(this.editProductQuantityInput, el => el.value);
+    console.log(quantityApres)
+
+    //await console.log(await this.page.content());
     return parseFloat(await this.getTextContent(this.productQuantitySpan(row)));
   }
 
