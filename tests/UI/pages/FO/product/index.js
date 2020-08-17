@@ -36,6 +36,7 @@ module.exports = class Product extends FOBasePage {
    * @returns {Promise<{price: (number), name: (string), description: (string)}>}
    */
   async getProductInformation() {
+    await console.log(await this.page.content())
     return {
       name: await this.getTextContent(this.productName),
       price: parseFloat(await this.getAttributeContent(this.productPrice, 'content')),
