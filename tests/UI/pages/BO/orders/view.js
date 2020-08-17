@@ -50,13 +50,18 @@ module.exports = class Order extends BOBasePage {
       this.waitForVisibleSelector(this.editProductQuantityInput),
     ]);
     await this.setValue(this.editProductQuantityInput, quantity.toString());
-    const quantityAvant = await this.page.$eval(this.editProductQuantityInput, el => el.value);
-    console.log(quantityAvant)
+    //const quantityAvant = await this.page.$eval(this.editProductQuantityInput, el => el.value);
+    //console.log(quantityAvant)
+
     await this.page.click(this.UpdateProductButton);
     await this.page.waitForTimeout(2000);
 
-    const quantityApres = await this.page.$eval(this.editProductQuantityInput, el => el.value);
-    console.log(quantityApres)
+    const isDisabled = await this.elementVisible(`${this.UpdateProductButton}[disabled="disabled"]`, 1000);
+    console.log(isDisabled);
+
+    //const quantityApres = await this.page.$eval(this.editProductQuantityInput, el => el.value);
+    //console.log(quantityApres)
+    await this.page.reload({waitUntil: "networkidle"});
 
     //await console.log(await this.page.content());
     return parseFloat(await this.getTextContent(this.productQuantitySpan(row)));
