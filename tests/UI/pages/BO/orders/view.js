@@ -46,15 +46,18 @@ class Order extends BOBasePage {
    */
   async modifyProductQuantity(page, row, quantity) {
     this.dialogListener(page);
+
     await Promise.all([
       page.click(this.editProductButton(row)),
       this.waitForVisibleSelector(page, this.editProductQuantityInput),
     ]);
+
     await this.setValue(page, this.editProductQuantityInput, quantity.toString());
     await Promise.all([
       page.click(this.UpdateProductButton),
       this.waitForVisibleSelector(page, this.editProductQuantityInput),
     ]);
+    await page.reload({waitUntil: 'networkidle'});
     return parseFloat(await this.getTextContent(page, this.productQuantitySpan(row)));
   }
 
